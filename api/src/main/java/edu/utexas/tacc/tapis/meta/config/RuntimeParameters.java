@@ -54,17 +54,16 @@ public class RuntimeParameters {
   // service locations.
   // TODO: **************** Remove hardcoded paths and site ****************
   // TODO: FIX-FOR-ASSOCIATE-SITES 
-  private String tenantBaseUrl = "https://dev.develop.tapis.io/";
-  private String skSvcURL      = "https://dev.develop.tapis.io/v3";
-  private String tokenBaseUrl  = "https://dev.develop.tapis.io/";
-  private String site          = "tacc";
+  private String tenantBaseUrl = "";    // default "https://dev.develop.tapis.io/"
+  private String skSvcURL      = "";    // default "https://dev.develop.tapis.io/v3"
+  private String tokenBaseUrl  = "";    // default "https://dev.develop.tapis.io/"
   private String metaToken;
   private ServiceJWT serviceJWT;
   
   // The slf4j/logback target directory and file.
   private String  logDirectory;
   private String  logFile;
-  private String  coreServer = "http://restheart:8080/";
+  private String  coreServer = "http://restheart:8080/";  // default "http://restheart:8080/"
   
   
   // these need to move to shared library
@@ -87,7 +86,7 @@ public class RuntimeParameters {
     }
   
     // The site must always be provided.
-    String parm = inputProperties.getProperty(TapisEnv.EnvVar.TAPIS_SITE_ID.getEnvName());
+    String parm = System.getenv("tapis.site.id");
     if (StringUtils.isBlank(parm)) {
       String msg = MsgUtils.getMsg("TAPIS_SERVICE_PARM_INITIALIZATION_FAILED",
           RuntimeParameters.SERVICE_NAME_META,
@@ -156,14 +155,22 @@ public class RuntimeParameters {
     buf.append("\ntapis.log.file: ");
     buf.append(this.getLogFile());
     
-    buf.append("\n------- Network -----------------------------------");
+    buf.append("\n\n------- Network -----------------------------------");
     buf.append("\nHost Addresses: ");
-    // buf.append(getNetworkAddresses());
+  
+    buf.append("\n\n------- Site Id -----------------------------------");
+    buf.append("\ntapis.site.id: ");
+    buf.append(this.getSiteId());
+
+    buf.append("\n\n------- Services base URLs -----------------------------------");
+    buf.append("\ntapis.meta.service.tenantBaseUrl: ");
+    buf.append(this.getTenantBaseUrl());
+    buf.append("\ntapis.meta.service.skSvcURL: ");
+    buf.append(this.getSkSvcURL());
+    buf.append("\ntapis.meta.service.tokenBaseUrl: ");
+    buf.append(this.getTokenBaseUrl());
     
-    buf.append("\n------- Tenants -----------------------------------");
-    buf.append("\ntapis.tenant.svc.baseurl: ");
-    
-    buf.append("\n------- DB Configuration --------------------------");
+    buf.append("\n\n------- DB Configuration --------------------------");
 
 /*
     buf.append("\n------- Email Configuration -----------------------");
@@ -191,7 +198,7 @@ public class RuntimeParameters {
     // buf.append(this.getSupportEmail());
 */
     
-    buf.append("\n------- EnvOnly Configuration ---------------------");
+    buf.append("\n\n------- EnvOnly Configuration ---------------------");
     buf.append("\ntapis.envonly.log.security.info: ");
     buf.append(RuntimeParameters.getLogSecurityInfo());
     buf.append("\ntapis.envonly.allow.test.header.parms: ");
@@ -201,7 +208,7 @@ public class RuntimeParameters {
     buf.append("\ntapis.envonly.skip.jwt.verify: ");
     buf.append(TapisEnv.getBoolean(TapisEnv.EnvVar.TAPIS_ENVONLY_SKIP_JWT_VERIFY));
     
-    buf.append("\n------- Java Configuration ------------------------");
+    buf.append("\n\n------- Java Configuration ------------------------");
     buf.append("\njava.version: ");
     buf.append(System.getProperty("java.version"));
     buf.append("\njava.vendor: ");
@@ -225,7 +232,7 @@ public class RuntimeParameters {
     buf.append("\nuser.dir: ");
     buf.append(System.getProperty("user.dir"));
     
-    buf.append("\n------- JVM Runtime Values ------------------------");
+    buf.append("\n\n------- JVM Runtime Values ------------------------");
     NumberFormat formatter = NumberFormat.getIntegerInstance();
     buf.append("\navailableProcessors: ");
     buf.append(formatter.format(Runtime.getRuntime().availableProcessors()));
@@ -298,7 +305,7 @@ public class RuntimeParameters {
     serviceJWTParms.setTenant(RuntimeParameters.SERVICE_TENANT_NAME);
     serviceJWTParms.setTokensBaseUrl(this.getTenantBaseUrl());
     // TODO see what this changed to
-    serviceJWTParms.setTargetSites(Arrays.asList(site));
+    serviceJWTParms.setTargetSites(Arrays.asList(getSiteId()));
     serviceJWT = null;
     try {
       serviceJWT = new ServiceJWT(serviceJWTParms, TapisEnv.get(TapisEnv.EnvVar.TAPIS_SERVICE_PASSWORD));

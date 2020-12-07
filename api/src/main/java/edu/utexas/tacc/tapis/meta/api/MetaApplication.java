@@ -7,12 +7,15 @@ import edu.utexas.tacc.tapis.sharedapi.jaxrs.filters.JWTValidateRequestFilter;
 import io.swagger.v3.jaxrs2.integration.resources.AcceptHeaderOpenApiResource;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.ApplicationPath;
 
-
 @ApplicationPath("/meta")
 public class MetaApplication extends ResourceConfig {
+  // Tracing.
+  private static final Logger _log = LoggerFactory.getLogger(MetaApplication.class);
   
   public MetaApplication() throws TapisException {
     // Log our existence.
@@ -28,7 +31,7 @@ public class MetaApplication extends ResourceConfig {
     packages("edu.utexas.tacc.tapis");
     setApplicationName("meta");
   
-    
+    RuntimeParameters runTime = RuntimeParameters.getInstance();
     // Force runtime initialization of the tenant manager.  This creates the
     // singleton instance of the TenantManager that can then be accessed by
     // all subsequent application code--including filters--without reference
@@ -37,7 +40,6 @@ public class MetaApplication extends ResourceConfig {
       // The base url of the tenants service is a required input parameter.
       // We actually retrieve the tenant list from the tenant service now
       // to fail fast if we can't access the list.
-      RuntimeParameters runTime = RuntimeParameters.getInstance();
       String url = runTime.getTenantBaseUrl();
       TenantManager.getInstance(url).getTenants();
   
@@ -55,7 +57,19 @@ public class MetaApplication extends ResourceConfig {
       throw e;
     }
   
+    // Dump the parms.
+    StringBuilder buf = new StringBuilder(2500); // capacity to avoid resizing
+    buf.append("\n------- Starting  Meta Service ");
+    buf.append(" -------");
+    buf.append("\nBase URL: ");
+    //buf.append(requestContext.getUriInfo().getBaseUri().toString());
   
+    // Dump the runtime configuration.
+    runTime.getRuntimeInfo(buf);
+    buf.append("\n---------------------------------------------------\n");
+  
+    // Write the output information.
+    System.out.println(buf.toString());
   }
 
 }
