@@ -25,12 +25,13 @@ RUN yum -y install nano
 
 # add
 COPY meta /usr/local/tomcat/webapps/v3/
+COPY logback.xml /usr/local/tomcat/etc/
 
 # Set environment and turn on remote debug
 ENV CATALINA_HOME /usr/local/tomcat
 
 # Set most Java options here.
-ENV CATALINA_OPTS -Xms4g -Xmx4g
+ENV CATALINA_OPTS -Xms4g -Xmx4g -Dlogback.configurationFile=/usr/local/tomcat/etc/logback.xml
 
 # Debug port and http port
 EXPOSE 8000

@@ -85,6 +85,11 @@ echo "***          copy the new service package directory to our docker build di
 echo "***   cp -r ${SRVC_DIR}/${WAR_NAME} ${IMAGE_BUILD_DIR}/ "
             cp -r ${SRVC_DIR}/${WAR_NAME}  ${IMAGE_BUILD_DIR}/
 
+echo "***          copy the logback.xml to our docker build directory "
+echo "***   cp ${TAPIS_ROOT}/tools/environment/logback.xml ${IMAGE_BUILD_DIR}/ "
+            cp ${TAPIS_ROOT}/tools/environment/logback.xml ${IMAGE_BUILD_DIR}/
+
+
 echo "";echo ""
 
 echo " ***   jump to the deployment build directory "
@@ -109,6 +114,6 @@ echo "***      Push to docker hub : docker push ${IMAGE_NAME}"
                # docker push "$IMAGE_NAME"
 echo ""
 echo "***      Tag and Push to private registry : docker push jenkins2.tacc.utexas.edu:5000/${VERBOSE_IMAGE_NAME}"
-                docker tag ${IMAGE_NAME} jenkins2.tacc.utexas.edu:5000/${VERBOSE_IMAGE_NAME}
-                docker push jenkins2.tacc.utexas.edu:5000/${VERBOSE_IMAGE_NAME}
+                # docker tag ${IMAGE_NAME} jenkins2.tacc.utexas.edu:5000/${VERBOSE_IMAGE_NAME}
+                # docker push jenkins2.tacc.utexas.edu:5000/${VERBOSE_IMAGE_NAME}
 

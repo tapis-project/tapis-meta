@@ -78,3 +78,4 @@ Icon
 /tools/http.testing/rest-client.private.env.json
 /tools/http.testing/archive-env.json
 /tools/environment/tapisdev.env
+/deployment/tapis-metaapi/logback.xml
