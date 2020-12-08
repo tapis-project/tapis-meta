@@ -78,6 +78,8 @@ public class MetaApplication extends ResourceConfig {
       // We actually retrieve the tenant list from the tenant service now
       // to fail fast if we can't access the list.
       String url = runTime.getTenantBaseUrl();
+      // TODO this needs revisiting when JoeS deploys tenant changes.
+      // TenantManager.getInstance().getSiteMasterTenantId(runTime.getSiteId()).
       tenantMap = TenantManager.getInstance(url).getTenants();
     } catch (Exception e) {
       // We don't depend on the logging subsystem.
