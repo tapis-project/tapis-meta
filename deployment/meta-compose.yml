@@ -15,8 +15,14 @@ volumes:
 
 services:
    meta-security:
-      image: tapis/metaapi:0.0.1-dev
+      image: tapis/metaapi:dev
       container_name: meta-tapis-security
+      environment:
+         - 'tapis.site.id=tacc'
+         - 'tapis.meta.service.tenantBaseUrl=https://dev.develop.tapis.io/'
+         - 'tapis.meta.service.skSvcURL=https://dev.develop.tapis.io/v3'
+         - 'tapis.meta.service.tokenBaseUrl=https://dev.develop.tapis.io/'
+         - 'TAPIS_SERVICE_PASSWORD=GZ9A9CGaTJ5MNr89BAvw2Aazw'
       depends_on:
          - restheart
       networks:

@@ -59,6 +59,7 @@ public class RuntimeParameters {
   private String tokenBaseUrl  = "";    // default "https://dev.develop.tapis.io/"
   private String metaToken;
   private ServiceJWT serviceJWT;
+  private String servicePassword;
   
   // The slf4j/logback target directory and file.
   private String  logDirectory;
@@ -119,6 +120,9 @@ public class RuntimeParameters {
   
     parm = System.getenv("tapis.meta.service.tokenBaseUrl");
     if (!StringUtils.isBlank(parm)) setTokenBaseUrl(parm);
+    
+    parm = System.getenv("TAPIS_SERVICE_PASSWORD");
+    if (!StringUtils.isBlank(parm)) setServicePassword(parm);
   
   }
   
@@ -149,7 +153,7 @@ public class RuntimeParameters {
    */
   public void getRuntimeInfo(StringBuilder buf)
   {
-    buf.append("\n------- Logging -----------------------------------");
+    buf.append("\n\n------- Logging -----------------------------------");
     buf.append("\ntapis.log.directory: ");
     buf.append(this.getLogDirectory());
     buf.append("\ntapis.log.file: ");
@@ -158,10 +162,12 @@ public class RuntimeParameters {
     buf.append("\n\n------- Network -----------------------------------");
     buf.append("\nHost Addresses: ");
   
-    buf.append("\n\n------- Site Id -----------------------------------");
+    buf.append("\n\n------- Site Id and Service password -----------------------------------");
     buf.append("\ntapis.site.id: ");
     buf.append(this.getSiteId());
-
+    buf.append("\nTAPIS_SERVICE_PASSWORD: ");
+    buf.append(this.getServicePassword());
+    
     buf.append("\n\n------- Services base URLs -----------------------------------");
     buf.append("\ntapis.meta.service.tenantBaseUrl: ");
     buf.append(this.getTenantBaseUrl());
@@ -245,29 +251,24 @@ public class RuntimeParameters {
   }
   
   public String getSiteId() { return siteId; }
-  
   public void setSiteId(String siteId) { this.siteId = siteId; }
   
   public String getTenantBaseUrl() { return this.tenantBaseUrl; }
-  
   public void setTenantBaseUrl(String tenantBaseUrl) {
     this.tenantBaseUrl = tenantBaseUrl;
   }
   
   public String getSkSvcURL() { return skSvcURL; }
-  
   public void setSkSvcURL(String skSvcURL) {
     this.skSvcURL = skSvcURL;
   }
   
   public String getTokenBaseUrl() { return tokenBaseUrl; }
-  
   public void setTokenBaseUrl(String tokenBaseUrl) { this.tokenBaseUrl = tokenBaseUrl; }
   
   public String getMetaToken() {
     return metaToken;
   }
-  
   public void setMetaToken(String metaToken) {
     this.metaToken = metaToken;
   }
@@ -275,7 +276,6 @@ public class RuntimeParameters {
   public String getLogDirectory() {
     return logDirectory;
   }
-  
   public void setLogDirectory(String logDirectory) {
     this.logDirectory = logDirectory;
   }
@@ -283,7 +283,6 @@ public class RuntimeParameters {
   public String getLogFile() {
     return logFile;
   }
-  
   public void setLogFile(String logFile) {
     this.logFile = logFile;
   }
@@ -291,10 +290,12 @@ public class RuntimeParameters {
   public String getCoreServer() {
     return coreServer;
   }
-  
   public void setCoreServer(String coreServer) {
     this.coreServer = coreServer;
   }
+  
+  public String getServicePassword() { return servicePassword; }
+  public void setServicePassword(String servicePassword) { this.servicePassword = servicePassword; }
   
   public void setServiceJWT(){
     _log.debug("calling setServiceJWT ...");
