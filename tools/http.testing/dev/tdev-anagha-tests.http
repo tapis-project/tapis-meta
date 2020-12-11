@@ -45,7 +45,7 @@ GET https://dev.develop.tapis.io/v3/meta/healthcheck
 GET https://dev.develop.tapis.io/v3/meta/StreamsDevDB
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 > {%

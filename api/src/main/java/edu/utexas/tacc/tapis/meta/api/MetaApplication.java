@@ -25,9 +25,7 @@ public class MetaApplication extends ResourceConfig {
     // Log our existence.
     System.out.println("**** Starting tapis-metaapi ****");
     
-    // Register the swagger resources that allow the
-    // documentation endpoints to be automatically generated.
-    // TODO expand to all endpoints for auto generation of openapi definition
+    // Register the swagger resources
     register(OpenApiResource.class);
     register(AcceptHeaderOpenApiResource.class);
     
@@ -36,30 +34,6 @@ public class MetaApplication extends ResourceConfig {
     setApplicationName("meta");
   
     RuntimeParameters runTime = RuntimeParameters.getInstance();
-    // Force runtime initialization of the tenant manager.  This creates the
-    // singleton instance of the TenantManager that can then be accessed by
-    // all subsequent application code--including filters--without reference
-    // to the tenant service base url parameter.
-    // try {
-      // The base url of the tenants service is a required input parameter.
-      // We actually retrieve the tenant list from the tenant service now
-      // to fail fast if we can't access the list.
-      // String url = runTime.getTenantBaseUrl();
-      // TenantManager.getInstance(url).getTenants();
-  
-      // ---------------- Initialize Security Filter --------------
-      // Required to process any requests.
-      // JWTValidateRequestFilter.setService(runTime.SERVICE_NAME_META);
-      // JWTValidateRequestFilter.setSiteId(runTime.getSiteId());
-
-      // Do we also fail if we can't get a service token?
-      // runTime.setServiceJWT();
-    //} catch (Exception e) {
-      // We don't depend on the logging subsystem.
-      // System.out.println("**** FAILURE TO INITIALIZE: tapis-metaapi ****");
-      // e.printStackTrace();
-      // throw e;
-    //}
   
     // ---------------- Initialize Security Filter --------------
     // Required to process any requests.
@@ -79,7 +53,7 @@ public class MetaApplication extends ResourceConfig {
       // to fail fast if we can't access the list.
       String url = runTime.getTenantBaseUrl();
       // TODO this needs revisiting when JoeS deploys tenant changes.
-      // TenantManager.getInstance().getSiteMasterTenantId(runTime.getSiteId()).
+      // String siteMasterTenantId = TenantManager.getInstance().getSiteTenantId(runTime.getSiteId());
       tenantMap = TenantManager.getInstance(url).getTenants();
     } catch (Exception e) {
       // We don't depend on the logging subsystem.
@@ -93,7 +67,7 @@ public class MetaApplication extends ResourceConfig {
       for (String tenant : tenantMap.keySet()) s += "  " + tenant + "\n";
       System.out.println(s);
     } else
-      System.out.println("**** FAILURE TO INITIALIZE: tapis-jobsapi TenantManager - No Tenants ****");
+      System.out.println("**** FAILURE TO INITIALIZE: tapis-metaapi TenantManager - No Tenants ****");
   
     // ----- Service JWT Initialization
     ServiceContext serviceCxt = ServiceContext.getInstance();
@@ -103,7 +77,7 @@ public class MetaApplication extends ResourceConfig {
     }
     catch (Exception e) {
       // errors++;
-      System.out.println("**** FAILURE TO INITIALIZE: tapis-jobsapi ServiceContext ****");
+      System.out.println("**** FAILURE TO INITIALIZE: tapis-metaapi ServiceContext ****");
       e.printStackTrace();
     }
     if (serviceCxt.getServiceJWT() != null) {

@@ -52,8 +52,6 @@ public class RuntimeParameters {
   }
   
   // service locations.
-  // TODO: **************** Remove hardcoded paths and site ****************
-  // TODO: FIX-FOR-ASSOCIATE-SITES 
   private String tenantBaseUrl = "";    // default "https://dev.develop.tapis.io/"
   private String skSvcURL      = "";    // default "https://dev.develop.tapis.io/v3"
   private String tokenBaseUrl  = "";    // default "https://dev.develop.tapis.io/"
@@ -70,7 +68,7 @@ public class RuntimeParameters {
   // these need to move to shared library
   public static final String SERVICE_NAME_META  = "meta";
   public static final String SERVICE_USER_NAME  = "meta";
-  public static final String SERVICE_TENANT_NAME = "master";
+  public static final String SERVICE_TENANT_NAME = "admin";
   
   
   private RuntimeParameters() throws TapisRuntimeException {
@@ -305,13 +303,12 @@ public class RuntimeParameters {
     serviceJWTParms.setServiceName(RuntimeParameters.SERVICE_USER_NAME);
     serviceJWTParms.setTenant(RuntimeParameters.SERVICE_TENANT_NAME);
     serviceJWTParms.setTokensBaseUrl(this.getTenantBaseUrl());
-    // TODO see what this changed to
     serviceJWTParms.setTargetSites(Arrays.asList(getSiteId()));
     serviceJWT = null;
     try {
       serviceJWT = new ServiceJWT(serviceJWTParms, TapisEnv.get(TapisEnv.EnvVar.TAPIS_SERVICE_PASSWORD));
     } catch (TapisException | TapisClientException e) {
-      // TODO
+      _log.error("Service JWT initialization failed, unrecoverable error here");
       e.printStackTrace();
     }
   }
