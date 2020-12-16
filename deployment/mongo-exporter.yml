@@ -1,0 +1,16 @@
+#   https://hub.docker.com/r/bitnami/mongodb-exporter/
+#   https://github.com/percona/mongodb_exporter
+# docker run --name mongodb-exporter bitnami/mongodb-exporter:latest
+# should pick up the env. var MONGO_URI
+# MONGO_URI=mongodb://tapisadmin:d3f%40ult@aloe-dev04.tacc.utexas.edu:27019/?authSource=admin&authMechanism=SCRAM-SHA-1
+version: "3"
+services:
+  mongo-exporter:
+    image: bitnami/mongodb-exporter:latest
+    container_name: mongodb-exporter
+    restart: always
+    environment:
+      - 'MONGO_URI=mongodb://tapisadmin:d3f%40ult@aloe-dev04.tacc.utexas.edu:27019/?authSource=admin'
+    ports:
+      - '8001:8000'
+      - '9001:9000'

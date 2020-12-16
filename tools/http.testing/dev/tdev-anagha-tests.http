@@ -1,12 +1,12 @@
-# curl -u "streams:Z69AOj7nj9AAsXIAWqUF9Aivg" -H "Content-type: application/json" -d '{"token_tenant_id": "master", "account_type": "service", "token_username": "streams", "access_token_ttl": 9999999,  "target_site_id": "tacc" }' https://dev.develop.tapis.io/v3/tokens
+# curl -u "streams:Z69AOj7nj9AAsXIAWqUF9Aivg" -H "Content-type: application/json" -d '{"token_tenant_id": "admin", "account_type": "service", "token_username": "streams", "access_token_ttl": 9999999,  "target_site_id": "tacc" }' https://dev.develop.tapis.io/v3/tokens
 POST https://dev.develop.tapis.io/v3/tokens
 Authorization: Basic streams Z69AOj7nj9AAsXIAWqUF9Aivg
 Content-Type: application/json
 
-{"token_tenant_id": "master", "account_type": "service", "token_username": "streams", "access_token_ttl": 9999999,  "target_site_id": "tacc" }
+{"token_tenant_id": "admin", "account_type": "service", "token_username": "streams", "access_token_ttl": 9999999,  "target_site_id": "tacc" }
 
 ###
-# created 26.10.2020 8:42  streams master token for testing tapis dev
+# created 26.10.2020 8:42  streams admin token for testing tapis dev
 # {
 #   "message": "Token generation successful.",
 #   "result": {
@@ -26,7 +26,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/healthcheck
 # X-Tapis-Token: {{token}}
 # X-Tapis-User: taccMetaAdmin
-# X-Tapis-Tenant: master
+# X-Tapis-Tenant: admin
 # Content-Type: application/json
 
 ###
@@ -34,7 +34,7 @@ GET https://dev.develop.tapis.io/v3/meta/healthcheck
 
 ##################################### meta user #################################################
 # meta  these tests are hitting the dev deployment of RH-core
-# run with meta.master service token settings
+# run with meta.admin service token settings
 #
 ##############################################################
 #      DB endpoints
@@ -61,7 +61,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/StreamsDevDB/streams_project_metadata
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 > {%
@@ -77,7 +77,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/StreamsDevDB/streams_project_metadata
 X-Tapis-Token: {{token}}
 # X-Tapis-User: streams
-# X-Tapis-Tenant: master
+# X-Tapis-Tenant: admin
 Content-Type: application/json
 
 > {%
@@ -87,3 +87,17 @@ Content-Type: application/json
 %}
 
 ###
+
+###   db metadata   403 Forbidden  nginx/1.16.1
+PUT http://c002.rodeo.tacc.utexas.edu:31404/StreamsDevDB/streams_instrument_index
+###
+PUT http://c002.rodeo.tacc.utexas.edu:31404/StreamsDevDB/streams_project_metadata
+###
+PUT http://c002.rodeo.tacc.utexas.edu:31404/StreamsDevDB/streams_alerts_metadata
+###
+PUT http://c002.rodeo.tacc.utexas.edu:31404/StreamsDevDB/streams_templates_metadata
+###
+PUT http://c002.rodeo.tacc.utexas.edu:31404/StreamsDevDB/streams_channel_metadata
+###
+
+###  403 Forbidden  nginx/1.16.1

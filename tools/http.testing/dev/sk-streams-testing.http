@@ -1,0 +1,26 @@
+######################################################
+#
+#   tests with streams:admin user token
+#
+######################################################
+
+### SK get permissions for user streams using meta:admin service token
+#
+GET https://dev.develop.tapis.io/v3/security/user/perms/streams?tenant=admin
+X-Tapis-Token: {{token}}
+X-Tapis-User: streams
+X-Tapis-Tenant:admin
+Content-Type: application/json
+
+###
+
+### SK isPermitted for user streams:admin using meta:admin service token
+POST https://dev.develop.tapis.io/v3/security/user/isPermitted?tenant=admin
+X-Tapis-Token: {{token}}
+X-Tapis-User: streams
+X-Tapis-Tenant:admin
+Content-Type: application/json
+
+{"user":"streams","tenant":"admin","permSpec":"meta:admin:GET,PUT,POST,PATCH,DELETE:StreamsDevDB:*:*"}
+
+###

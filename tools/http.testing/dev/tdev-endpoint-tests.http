@@ -2,14 +2,14 @@
 GET https://dev.develop.tapis.io/v3/meta/healthcheck
 # X-Tapis-Token: {{token}}
 # X-Tapis-User: taccMetaAdmin
-# X-Tapis-Tenant: master
+# X-Tapis-Tenant: admin
 # Content-Type: application/json
 
 ###
 
 ##################################### meta user #################################################
 # meta  these tests are hitting the dev deployment of RH-core
-# run with meta.master service token settings
+# run with meta.admin service token settings
 #
 ##############################################################
 #      DB endpoints
@@ -20,7 +20,7 @@ GET https://dev.develop.tapis.io/v3/meta/healthcheck
 GET https://dev.develop.tapis.io/v3/meta/MyTstDB
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 > {%
@@ -36,7 +36,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/MyTstDB/_meta
 X-Tapis-Token: {{token}}
 X-Tapis-User:meta
-X-Tapis-Tenant:master
+X-Tapis-Tenant:admin
 Content-Type: application/json
 
 > {%
@@ -52,7 +52,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/sltst
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###  results  403 request for this uri path meta:dev:GET:sltst:: is NOT permitted.
@@ -64,7 +64,7 @@ Content-Type: application/json
 PUT https://dev.develop.tapis.io/v3/meta/MyTstDB
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###  results  200
@@ -75,7 +75,7 @@ Content-Type: application/json
 POST https://dev.develop.tapis.io/v3/meta/MyTstDB
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###   results 405   "Method Not Allowed"
@@ -87,7 +87,7 @@ Content-Type: application/json
 DELETE https://dev.develop.tapis.io/v3/meta/testdb/
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
@@ -102,7 +102,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
@@ -113,7 +113,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection/_meta
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
@@ -124,7 +124,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection?filter={'name':'test document 33'}&np=true
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
@@ -136,7 +136,7 @@ Content-Type: application/json
 PUT https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###  result
@@ -147,7 +147,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection/5f1892ece37f7b5a692285e9
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
@@ -158,7 +158,7 @@ Content-Type: application/json
 DELETE https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 ###  result msg with ETag header
 # ETag: 5e4c452b537bd1305796e5e2
@@ -175,7 +175,7 @@ Content-Type: application/json
 DELETE https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 If-Match: 5e4c452b537bd1305796e5e2
 Content-Type: application/json
 
@@ -194,7 +194,7 @@ Content-Type: application/json
 POST https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###  result 201  er  Created
@@ -205,7 +205,7 @@ Content-Type: application/json
 POST https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection?basic=true
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 { "name": "test document slt 7.21.2020-14:27", "jimmyList":["1","3"],"description": "new whatever"}
@@ -225,7 +225,7 @@ Content-Type: application/json
 DELETE https://dev.develop.tapis.io/v3/meta/MyTstDB/Proj3/5e9de1dca93eebf39fcad799
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###  result 204  er  no Content
@@ -238,7 +238,7 @@ Content-Type: application/json
 DELETE https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###  result is a 409 without ETag
@@ -249,7 +249,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection/5e9b2a9ba93eebf39fca5508
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
@@ -260,7 +260,7 @@ Content-Type: application/json
 PUT https://dev.develop.tapis.io/v3/meta/MyTstDB/Proj3/5e8f32b1a93eebf39fc7c609
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 { "site_name": "mysite7",
@@ -279,7 +279,7 @@ Content-Type: application/json
 PATCH https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection/5e8f32b1a93eebf39fc7c609
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 {
@@ -294,7 +294,7 @@ Content-Type: application/json
 POST https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection/5e8f32b1a93eebf39fc7c609
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 { "site_name": "mysite7",
@@ -313,7 +313,7 @@ Content-Type: application/json
 DELETE https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
@@ -326,7 +326,7 @@ Content-Type: application/json
 #
 DELETE https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection/5e9b2a9ba93eebf39fca5508
 X-Tapis-Token: {{token}}
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 X-Tapis-User: meta
 
 ###
@@ -341,7 +341,7 @@ X-Tapis-User: meta
 GET https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection/_indexes
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
@@ -355,7 +355,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection/_indexes
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
@@ -365,7 +365,7 @@ Content-Type: application/json
 PUT https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection/_indexes/testIndex
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 {"keys": { "document.lat": 1 } }
@@ -377,7 +377,7 @@ Content-Type: application/json
 DELETE https://dev.develop.tapis.io/v3/meta/MyTstDB/sltCollectionTst/_indexes/name1
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
@@ -386,7 +386,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/MyTstDB/Proj3?filter={"instruments.inst_id": {"$eq":78 } }
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
@@ -395,7 +395,7 @@ Content-Type: application/json
 GET https://dev.develop.tapis.io/v3/meta/MyTstDB/Proj3?filter={"instruments.inst_id":{"$eq":78 }}&keys={"instruments.$":1}&keys={"site_id":1}
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###

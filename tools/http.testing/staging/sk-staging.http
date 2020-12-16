@@ -1,38 +1,44 @@
 ######################################################
 #   staging calls
-#   tests with meta:master service token
+#   execute tests with meta:admin service token
 #
 ######################################################
 
-### SK grant permission for user streams all operations on
-POST https://master.staging.tapis.io/v3/security/user/grantUserPermission?tenant=master
+### SK get permissions for user streams using meta:admin service token
+GET https://admin.staging.tapis.io/v3/security/user/perms/streams?tenant=admin
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
-X-Tapis-Tenant:master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
-{
-  "user": "streams",
-  "tenant": "master",
-  "permSpec": "meta:master:GET,POST,PUT,PATCH,DELETE:StreamsStagingDB:*:*"
-}
+###
+
+
+### SK grant permission for user streams all operations on
+POST https://admin.staging.tapis.io/v3/security/user/grantUserPermission?tenant=admin
+X-Tapis-Token: {{token}}
+X-Tapis-User: streams
+X-Tapis-Tenant:admin
+Content-Type: application/json
+
+{"user": "streams", "tenant": "admin", "permSpec": "meta:admin:GET,POST,PUT,PATCH,DELETE:StreamsStagingDB:*:*"}
 
 ###
 
 ### SK grant permission for user meta all operations
-POST https://master.staging.tapis.io/v3/security/user/grantUserPermission?tenant=master
+POST https://admin.staging.tapis.io/v3/security/user/grantUserPermission?tenant=admin
 X-Tapis-Token: {{token}}
 X-Tapis-User: {{user}}
 X-Tapis-Tenant:{{tenant}}
 Content-Type: application/json
 
-{"user":"meta","tenant":"master","permSpec":"meta:master:GET,POST,PUT,PATCH,DELETE:*:*:*"}
+{"user":"meta","tenant":"admin","permSpec":"meta:admin:GET,POST,PUT,PATCH,DELETE:*:*:*"}
 
 ###
 
 
 ### SK grant permission for a user testuser4 read only for db
-POST https://master.staging.tapis.io/v3/security/user/grantUserPermission?tenant=master
+POST https://admin.staging.tapis.io/v3/security/user/grantUserPermission?tenant=admin
 X-Tapis-Token: {{token}}
 X-Tapis-User: {{user}}
 X-Tapis-Tenant:{{tenant}}
@@ -47,28 +53,28 @@ Content-Type: application/json
 
 ######################################################
 #   legacy for dev
-#   tests with taccMetaAdmin:master service token
+#   tests with taccMetaAdmin:admin service token
 #
 ######################################################
 
-### SK get permissions for user using meta:master service token
-GET https://master.staging.tapis.io/v3/security/user/perms/streams?tenant=dev
+### SK get permissions for user using meta:admin service token
+GET https://admin.staging.tapis.io/v3/security/user/perms/streams?tenant=admin
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
-X-Tapis-Tenant: dev
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
 
 
 ### SK isPermitted for user
-POST https://dev.develop.tapis.io/v3/security/user/isPermitted?tenant=master
+POST https://dev.develop.tapis.io/v3/security/user/isPermitted?tenant=admin
 X-Tapis-Token: {{token}}
-X-Tapis-User: {{user}}
-X-Tapis-Tenant:{{tenant}}
+X-Tapis-User: streams
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
-{"user":"streams","tenant":"dev","permSpec":"meta:master:GET:StreamsTACCDB:*:*"}
+{"user":"streams","tenant":"admin","permSpec":"meta:admin:GET:StreamsStagingDB:*:*"}
 
 ###
 # true
@@ -80,25 +86,25 @@ Content-Type: application/json
 
 
 ### SK grant permission for a taccMetaAdmin to all operations
-POST https://dev.develop.tapis.io/v3/security/user/grantUserPermission?tenant=master
+POST https://dev.develop.tapis.io/v3/security/user/grantUserPermission?tenant=admin
 X-Tapis-Token: {{token}}
 X-Tapis-User: {{user}}
 X-Tapis-Tenant:{{tenant}}
 Content-Type: application/json
 
-{"user":"meta","tenant":"master","permSpec":"meta:master:GET,POST,PUT,PATCH,DELETE:::"}
+{"user":"meta","tenant":"admin","permSpec":"meta:admin:GET,POST,PUT,PATCH,DELETE:::"}
 
 ###
 
 
 ### SK grant permission for a user meta all operations except delete
-POST https://dev.develop.tapis.io/v3/security/user/grantUserPermission?tenant=master
+POST https://dev.develop.tapis.io/v3/security/user/grantUserPermission?tenant=admin
 X-Tapis-Token: {{token}}
 X-Tapis-User: {{user}}
 X-Tapis-Tenant:{{tenant}}
 Content-Type: application/json
 
-{"user":"streams","tenant":"master","permSpec":"meta:master:GET,POST,PUT,PATCH,DELETE:StreamsTACCDB:*:*"}
+{"user":"streams","tenant":"admin","permSpec":"meta:admin:GET,POST,PUT,PATCH,DELETE:StreamsTACCDB:*:*"}
 
 ###
 
@@ -109,7 +115,7 @@ X-Tapis-User: {{user}}
 X-Tapis-Tenant:{{tenant}}
 Content-Type: application/json
 
-{"user":"meta","tenant":"master","permSpec":"meta:master:GET:StreamsTACCDB::"}
+{"user":"meta","tenant":"admin","permSpec":"meta:admin:GET:StreamsTACCDB::"}
 
 ###
 
@@ -122,7 +128,7 @@ X-Tapis-User: {{user}}
 X-Tapis-Tenant:{{tenant}}
 Content-Type: application/json
 
-{"user":"taccMetaAdmin","tenant":"master","permSpec":"meta:dev:GET,POST,PUT,DELETE:*:*:*"}
+{"user":"taccMetaAdmin","tenant":"admin","permSpec":"meta:dev:GET,POST,PUT,DELETE:*:*:*"}
 
 ###
 #      "meta:dev:DELETE:*:1collection:slttestdb",

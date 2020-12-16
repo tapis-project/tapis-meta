@@ -24,7 +24,7 @@ Content-Type: application/json
 ###
 
 ###   db metadata   403 Forbidden  nginx/1.16.1
-GET http://c002.rodeo.tacc.utexas.edu:30401/StreamsTACCDB/_meta
+GET http://c002.rodeo.tacc.utexas.edu:31404/StreamsDevDB/_meta
 X-Tapis-Token: {{token}}
 X-Tapis-User: streamsTACCAdmin
 X-Tapis-Tenant: dev
@@ -49,7 +49,7 @@ Content-Type: application/json
 PUT http://c002.rodeo.tacc.utexas.edu:31404/MyTstDB
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
-X-Tapis-Tenant: master
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###  results  200
@@ -84,7 +84,7 @@ Content-Type: application/json
 #     Collection endpoints
 ##############################################################
 
-###   use streams master token
+###   use streams admin token
 PUT http://c002.rodeo.tacc.utexas.edu:30401/StreamsTACCDB/sltCollectionTst
 X-Tapis-Token: {{token}}
 X-Tapis-User: streamsTACCAdmin
@@ -93,7 +93,7 @@ Content-Type: application/json
 
 ###
 
-###   use streams master token
+###   use streams admin token
 GET http://c002.rodeo.tacc.utexas.edu:30401/StreamsTACCDB/sltCollectionTst/_meta
 X-Tapis-Token: {{token}}
 X-Tapis-User: streamsTACCAdmin

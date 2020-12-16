@@ -1,0 +1,148 @@
+##############################################################
+#
+#  Beginning calls for initialization of clean V3 Meta
+#
+##############################################################
+###  Sanity check
+# curl -X PUT http://c006.rodeo.tacc.utexas.edu:$debugport/
+GET http://c006.rodeo.tacc.utexas.edu:31650/
+###
+
+##############################################################
+#  designsafe initialization of DB and admin for the designsafe tenant.
+##############################################################
+###  Create designsafeDB for designsafe tenant
+# curl -X PUT http://c006.rodeo.tacc.utexas.edu:$debugport/$DB
+PUT http://c006.rodeo.tacc.utexas.edu:31650/designsafedb
+###
+
+### SK grant permission for user ds_admin for all operations on StreamsProdDB
+# using meta:admin token
+POST https://admin.prod.tapis.io/v3/security/user/grantUserPermission?tenant=designsafe
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant:admin
+Content-Type: application/json
+
+{
+  "user": "ds_admin",
+  "tenant": "designsafe",
+  "permSpec": "meta:designsafe:GET,POST,PUT,PATCH,DELETE:designsafedb:*:*"
+}
+
+###
+
+######################################################
+#   production calls for jplDB
+#   tests for mlm55 and mpackard  users
+######################################################
+###  Create jplDB for tacc tenant
+# curl -X PUT http://c006.rodeo.tacc.utexas.edu:$debugport/$DB
+PUT http://c006.rodeo.tacc.utexas.edu:31650/jplDB
+###
+
+# SK grant permission for a user mlm55  all operations for jplDB
+### SK grant permission for a user mpackard all operations for jplDB
+POST https://master.tapis.io/v3/security/user/grantUserPermission?tenant=tacc
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+{"user":"mlm55","tenant":"tacc","permSpec":"meta:tacc:GET,POST,PUT,PATCH,DELETE:jplDB:*:*"}
+
+###
+
+#
+### SK grant permission for a user mpackard all operations for jplDB
+POST https://master.tapis.io/v3/security/user/grantUserPermission?tenant=tacc
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+{"user":"mpackard","tenant":"tacc","permSpec":"meta:tacc:GET,POST,PUT,PATCH,DELETE:jplDB:*:*"}
+
+###
+
+
+##############################################################
+#  initialization of StreamsProdDB for the admin tenant.
+##############################################################
+###
+# curl -X PUT http://c006.rodeo.tacc.utexas.edu:$debugport/$DB
+PUT http://c006.rodeo.tacc.utexas.edu:31650/StreamsProdDB
+###
+
+# curl -X PUT -H "$token" -H "$user" -H "$tenant" -H "$content" http://c006.rodeo.tacc.utexas.edu:31650/StreamsProdDB/streams_channel_metadata
+PUT http://c006.rodeo.tacc.utexas.edu:31650/StreamsProdDB/streams_channel_metadata
+###
+
+# curl -X PUT -H "$token" -H "$user" -H "$tenant" -H "$content" http://c006.rodeo.tacc.utexas.edu:31650/StreamsProdDB/streams_templates_metadata
+PUT http://c006.rodeo.tacc.utexas.edu:31650/StreamsProdDB/streams_templates_metadata
+###
+
+# curl -X PUT -H "$token" -H "$user" -H "$tenant" -H "$content" http://c006.rodeo.tacc.utexas.edu:31650/StreamsProdDB/streams_alerts_metadata
+PUT http://c006.rodeo.tacc.utexas.edu:31650/StreamsProdDB/streams_alerts_metadata
+###
+
+# curl -X PUT -H "$token" -H "$user" -H "$tenant" -H "$content" http://c006.rodeo.tacc.utexas.edu:31650/StreamsProdDB/streams_project_metadata
+PUT http://c006.rodeo.tacc.utexas.edu:31650/StreamsProdDB/streams_project_metadata
+###
+
+# curl -X PUT -H "$token" -H "$user" -H "$tenant" -H "$content" http://c006.rodeo.tacc.utexas.edu:31650/StreamsProdDB/streams_instrument_index
+PUT http://c006.rodeo.tacc.utexas.edu:31650/StreamsProdDB/streams_instrument_index
+###
+
+
+### SK grant permission for user meta all operations
+POST https://admin.prod.tapis.io/v3/security/user/grantUserPermission?tenant=admin
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+{"user":"meta","tenant":"admin","permSpec":"meta:admin:GET,POST,PUT,PATCH,DELETE:*:*:*"}
+
+###
+
+### SK grant permission for user streams for all operations on StreamsProdDB
+# using meta:admin token
+POST https://admin.prod.tapis.io/v3/security/user/grantUserPermission?tenant=admin
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant:admin
+Content-Type: application/json
+
+{
+  "user": "streams",
+  "tenant": "admin",
+  "permSpec": "meta:admin:GET,POST,PUT,PATCH,DELETE:StreamsProdDB:*:*"
+}
+
+###
+
+### SK get permissions for user streams using meta:admin service token
+#
+GET https://admin.prod.tapis.io/v3/security/user/perms/streams?tenant=admin
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant:admin
+Content-Type: application/json
+
+###
+
+### SK isPermitted for user streams:admin using meta:admin service token
+POST https://admin.prod.tapis.io/v3/security/user/isPermitted?tenant=admin
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant:admin
+Content-Type: application/json
+
+{"user":"streams","tenant":"admin","permSpec":"meta:admin:GET,PUT,POST,PATCH,DELETE:StreamsProdDB:*:*"}
+
+###
+
+
+
+

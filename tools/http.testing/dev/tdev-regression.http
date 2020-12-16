@@ -1,6 +1,6 @@
 ##############################################################
-#      Tests use meta.master.regression service token
-#       run with env meta.master.regression
+#      Tests use meta.admin.regression service token
+#       run with env meta.admin.regression
 #
 #  Assumes: MyTstDB exists
 #           collection and other resources do not exist
@@ -40,8 +40,8 @@ Content-Type: application/json
 
 ##############################################################
 #      setup for tests using creates for needed resources
-#       run with env meta.master
-#       meta master token
+#       run with env meta.admin
+#       meta admin token
 #  Assumes collection and other resources do not exist
 ##############################################################
 

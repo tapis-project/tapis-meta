@@ -1,0 +1,83 @@
+
+###  Sanity check
+# curl -X PUT http://c006.rodeo.tacc.utexas.edu:$debugport/
+GET http://c006.rodeo.tacc.utexas.edu:31650/
+###
+
+###
+# curl -X PUT http://c006.rodeo.tacc.utexas.edu:$debugport/$DB
+PUT http://c006.rodeo.tacc.utexas.edu:31650/StreamsTACCDB
+###
+
+# curl -X PUT -H "$token" -H "$user" -H "$tenant" -H "$content" http://c006.rodeo.tacc.utexas.edu:31650/StreamsTACCDB/streams_channel_metadata
+PUT http://c006.rodeo.tacc.utexas.edu:31650/StreamsTACCDB/streams_channel_metadata
+###
+
+# curl -X PUT -H "$token" -H "$user" -H "$tenant" -H "$content" http://c006.rodeo.tacc.utexas.edu:31650/StreamsTACCDB/streams_templates_metadata
+PUT http://c006.rodeo.tacc.utexas.edu:31650/StreamsTACCDB/streams_templates_metadata
+###
+
+# curl -X PUT -H "$token" -H "$user" -H "$tenant" -H "$content" http://c006.rodeo.tacc.utexas.edu:31650/StreamsTACCDB/streams_alerts_metadata
+PUT http://c006.rodeo.tacc.utexas.edu:31650/StreamsTACCDB/streams_alerts_metadata
+###
+
+# curl -X PUT -H "$token" -H "$user" -H "$tenant" -H "$content" http://c006.rodeo.tacc.utexas.edu:31650/StreamsTACCDB/streams_project_metadata
+PUT http://c006.rodeo.tacc.utexas.edu:31650/StreamsTACCDB/streams_project_metadata
+###
+
+# curl -X PUT -H "$token" -H "$user" -H "$tenant" -H "$content" http://c006.rodeo.tacc.utexas.edu:31650/StreamsTACCDB/streams_instrument_index
+PUT http://c006.rodeo.tacc.utexas.edu:31650/StreamsTACCDB/streams_instrument_index
+###
+
+
+### SK grant permission for user meta all operations
+POST https://admin.prod.tapis.io/v3/security/user/grantUserPermission?tenant=admin
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+{"user":"meta","tenant":"admin","permSpec":"meta:admin:GET,POST,PUT,PATCH,DELETE:*:*:*"}
+
+###
+
+### SK grant permission for user streams for all operations on StreamsTACCDB
+# using meta:admin token
+POST https://admin.prod.tapis.io/v3/security/user/grantUserPermission?tenant=admin
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant:admin
+Content-Type: application/json
+
+{
+  "user": "streams",
+  "tenant": "admin",
+  "permSpec": "meta:admin:GET,POST,PUT,PATCH,DELETE:StreamsTACCDB:*:*"
+}
+
+###
+
+### SK get permissions for user streams using meta:admin service token
+#
+GET https://admin.prod.tapis.io/v3/security/user/perms/streams?tenant=admin
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant:admin
+Content-Type: application/json
+
+###
+
+### SK isPermitted for user streams:admin using meta:admin service token
+POST https://admin.prod.tapis.io/v3/security/user/isPermitted?tenant=admin
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant:admin
+Content-Type: application/json
+
+{"user":"streams","tenant":"admin","permSpec":"meta:admin:GET,PUT,POST,PATCH,DELETE:StreamsTACCDB:*:*"}
+
+###
+
+
+
+
