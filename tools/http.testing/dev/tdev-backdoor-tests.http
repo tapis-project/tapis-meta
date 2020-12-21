@@ -7,6 +7,13 @@ Content-Type: application/json
 
 ###
 
+###  mongo-query-exporter  metrics endpoint.
+GET http://c002.rodeo.tacc.utexas.edu:31595/metrics
+
+Content-Type: application/json
+
+###
+
 
 ##################################### streamsTACCAdmin user #################################################
 
