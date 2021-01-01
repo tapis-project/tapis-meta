@@ -1,0 +1,24 @@
+##########################################################################
+# tapis image for mongodb-query-exporter
+#
+# usage:
+#   docker build -f $BUILD_FILE -t $TAG .
+#
+##########################################################################FROM quay.io/prometheus/golang-builder AS builder
+
+ADD .   /go/src/github.com/raffis/mongodb-query-exporter
+WORKDIR /go/src/github.com/raffis/mongodb-query-exporter
+
+
+RUN make deps vet format build unittest
+
+FROM        gcr.io/distroless/base
+COPY        --from=builder /go/src/github.com/raffis/mongodb-query-exporter/mongodb_query_exporter /bin/mongodb_query_exporter
+# COPY        mqe-config.yml /etc/mongodb-query-exporter/config.yaml
+
+ENV MDBEXPORTER_CONFIG /etc/mongodb-query-exporter/config.yaml
+USER 1000:1000
+
+MAINTAINER CIC Support <cicsupport@tacc.utexas.edu>
+EXPOSE      9412
+ENTRYPOINT [ "/bin/mongodb_query_exporter" ]

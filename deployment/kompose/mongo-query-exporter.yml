@@ -1,0 +1,18 @@
+#   https://github.com/raffis/mongodb-query-exporter
+#   https://hub.docker.com/r/raffis/mongodb-query-exporter
+# docker run --name mongodb-query-exporter raffis/mongodb-query-exporter
+# should pick up the env. var MONGO_URI
+#       - 'MDBEXPORTER_MONGODB_URI=mongodb://tapisadmin:d3f%40ult@aloe-dev04.tacc.utexas.edu:27019/?authSource=admin'
+version: "3"
+services:
+  mongo-exporter:
+    # image: raffis/mongodb-query-exporter:v1.0.0-beta6
+    image: tapis/mqe:0.1
+    container_name: mongodb-query-exporter
+    restart: always
+    environment:
+      - 'MDBEXPORTER_MONGODB_URI=mongodb://tapisadmin:d3f%40ult@aloe-dev04.tacc.utexas.edu:27019/?authSource=admin'
+    ports:
+      - '9412:9412'
+    # volumes:
+      # - './mqe-config.yml:/etc/mongodb-query-exporter/config.yaml'

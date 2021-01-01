@@ -1,0 +1,30 @@
+version: 2.0
+bind: 0.0.0.0:9412
+log:
+  encoding: json
+  level: info
+  development: false
+  disableCaller: false
+global:
+  queryTimeout: 10
+  maxConnection: 3
+  defaultCache: 5
+servers:
+  - name: main
+    uri:  mongodb://tapisadmin:d3f%40ult@aloe-dev04.tacc.utexas.edu:27019/?authSource=admin'
+metrics:
+  - name: myapp_example_simplevalue_total
+    type: gauge #Can also be empty, the default is gauge
+    servers: [main] #Can also be empty, if empty the metric will be used for every server defined
+    help: 'Simple gauge metric'
+    value: total
+    labels: []
+    mode: pull
+    cache: 0
+    constLabels: []
+    database: StreamsDevDB
+    collection: streams_metrics
+    pipeline: |
+      [
+        {"$count":"total"}
+      ]
