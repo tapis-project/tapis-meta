@@ -180,7 +180,7 @@ public class ResourceBucket {
     return javax.ws.rs.core.Response.status(coreResponse.getStatusCode()).entity(coreResponse.getCoreResponsebody()).build();
   }
   
-  // TODO ----------------  Delete DB ----------------
+  // TODO in interface ----------------  Delete DB ----------------
   @DELETE
   @Path("/{db}")
   @Produces(MediaType.APPLICATION_JSON)
@@ -188,9 +188,9 @@ public class ResourceBucket {
     return javax.ws.rs.core.Response.status(200).entity("{ TODO }").build();
   }
   
-  /*************************************************
-   *    Collection endpoints
-   *************************************************/
+  /*------------------------------------------------------------------------
+   *                              Collection endpoints
+   * -----------------------------------------------------------------------*/
   
   //----------------  Create a Collection ----------------
   @PUT
