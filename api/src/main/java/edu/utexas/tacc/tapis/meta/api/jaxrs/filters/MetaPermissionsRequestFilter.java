@@ -16,13 +16,13 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MultivaluedMap;
+// import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+// import java.io.IOException;
+// import java.util.Iterator;
+// import java.util.List;
+// import java.util.Map;
 
 @Provider
 @Priority(MetaAppConstants.META_FILTER_PRIORITY_PERMISSIONS)
@@ -35,7 +35,7 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
   
   
   @Override
-  public void filter(ContainerRequestContext requestContext) throws IOException {
+  public void filter(ContainerRequestContext requestContext) {
     // done 1. turn request into a permission spec.
     // done 2. utilize the SK client sdk to ask isPermitted
     // done 3. decide yes or no based on response
@@ -81,10 +81,11 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
     if(!isPermitted){
       String uri = requestContext.getUriInfo().getPath();
           uri = (uri.equals("")) ? "root" : uri;
-      StringBuilder msg = new StringBuilder()
-          .append("request for this uri path "+uri+" permissions spec ")
-          .append(permissionsSpec)
-          .append(" is NOT permitted.");
+      StringBuilder msg = new StringBuilder().append("request for this uri path ")
+                                             .append(uri)
+                                             .append(" permissions spec ")
+                                             .append(permissionsSpec)
+                                             .append(" is NOT permitted.");
       
       _log.info(msg.toString());
       requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).entity(msg.toString()).build());
@@ -92,12 +93,11 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
     }
     
     //------------------------------  permitted to continue  ------------------------------
-    StringBuilder msg = new StringBuilder()
-        .append("request for this uri permission spec ")
-        .append(permissionsSpec)
-        .append(" is permitted.");
-    
-    _log.debug(msg.toString());
+  
+    String msg = "request for this uri permission spec " +
+        permissionsSpec +
+        " is permitted.";
+    _log.debug(msg);
   }
   
   /*------------------------------------------------------------------------
@@ -106,9 +106,9 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
   /**
    * Check Permissions based on service JWT from request.
    * make an isPermitted request of the SK
-   * @param threadContext
-   * @param skClient
-   * @param permissionsSpec
+   * @param threadContext thread context
+   * @param skClient      SKClient to use
+   * @param permissionsSpec  Permissions spec
    */
   private boolean serviceJWT(TapisThreadContext threadContext, SKClient skClient, String permissionsSpec){
     // 1. If a service receives a request that contains a service JWT,
@@ -130,22 +130,20 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
     // check skClient.isPermitted against the requested uri path
     try {
       // checking obo tenant and user
-      StringBuilder msg = new StringBuilder();
-      msg.append("Permissions check for Tenant ")
-         .append(threadContext.getJwtTenantId())
-         .append(", User ")
-         .append(threadContext.getJwtUser())
-         .append(" with permissions ")
-         .append(permissionsSpec+".");
-    
-      _log.debug(msg.toString());
+      String msg = "Permissions check for Tenant " +
+          threadContext.getJwtTenantId() +
+          ", User " +
+          threadContext.getJwtUser() +
+          " with permissions " +
+          permissionsSpec +
+          ".";
+      _log.debug(msg);
       isPermitted = skClient.isPermitted(threadContext.getJwtTenantId(), threadContext.getJwtUser(), permissionsSpec);
     } catch (TapisClientException e) {
-      StringBuilder msg = new StringBuilder();
-      msg.append("SKClient threw and exception on call to SK ")
-         .append(e.getTapisMessage());
   
-      _log.debug(msg.toString());
+      String msg = "SKClient threw and exception on call to SK " +
+          e.getTapisMessage();
+      _log.debug(msg);
     }
     
     return isPermitted;
@@ -175,11 +173,10 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
       // checking obo tenant and user
       isPermitted = skClient.isPermitted(threadContext.getJwtTenantId(), threadContext.getJwtUser(), permissionsSpec);
     } catch (TapisClientException e) {
-      StringBuilder msg = new StringBuilder();
-      msg.append("SKClient threw and exception on call to SK ")
-         .append(e.getTapisMessage());
   
-      _log.debug(msg.toString());
+      String msg = "SKClient threw and exception on call to SK " +
+          e.getTapisMessage();
+      _log.debug(msg);
     }
     
     return isPermitted;
@@ -188,14 +185,14 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
   
   /**
    * Turn the request uri into a SK permissions spec to check authorization
-   * @param requestContext
+   * @param requestContext  the jersey request context
    * @return  the String representing a permissions spec for comparison. "" empty String if unsuccessful.
    */
   private String mapRequestToPermissions(ContainerRequestContext requestContext, String tenantId) {
     String requestMethod = requestContext.getMethod();
     String requestUri = requestContext.getUriInfo().getPath();
     // getting the tenant info
-    MetaSKPermissionsMapper mapper = null;
+    MetaSKPermissionsMapper mapper;
     String permSpec = "";
     if(!tenantId.isEmpty()){
       mapper = new MetaSKPermissionsMapper(requestUri, tenantId);
@@ -205,7 +202,9 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
     permSpec = mapper.convert(requestMethod);
     return permSpec;
   }
-  
+
+  // TODO use or lose
+/*
   private void debugRequestDump(TapisThreadContext threadContext,ContainerRequestContext requestContext){
     _log.trace("Thread context ");
     _log.trace("  account : "+threadContext.getAccountType().toString());
@@ -214,9 +213,10 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
     _log.trace("Request context ");
     _log.trace("Headers  ");
     MultivaluedMap<String,String> headers = requestContext.getHeaders();
-    headers.forEach((k, v)->{ _log.trace("      Key: " + k + " Value: " + v); });
+    headers.forEach((k, v)-> _log.trace("      Key: " + k + " Value: " + v));
 
   }
-  
+*/
+
   
 }
