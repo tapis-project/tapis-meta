@@ -20,9 +20,6 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 @Provider
 @Priority(MetaAppConstants.META_FILTER_PRIORITY_PERMISSIONS)

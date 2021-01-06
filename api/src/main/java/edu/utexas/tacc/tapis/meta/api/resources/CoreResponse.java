@@ -5,14 +5,12 @@ import com.google.gson.JsonParser;
 import edu.utexas.tacc.tapis.meta.config.RuntimeParameters;
 import edu.utexas.tacc.tapis.shared.utils.TapisGsonUtils;
 import edu.utexas.tacc.tapis.shared.utils.TapisUtils;
-import edu.utexas.tacc.tapis.sharedapi.dto.ResponseWrapper;
 import edu.utexas.tacc.tapis.sharedapi.responses.RespBasic;
 import okhttp3.ResponseBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import javax.ws.rs.core.EntityTag;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;

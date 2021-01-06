@@ -1,7 +1,5 @@
 package edu.utexas.tacc.tapis.meta.parameters;
 
-import edu.utexas.tacc.tapis.shared.parameters.TapisEnv;
-
 public class MetaEnv {
   
   private static String getEnvValue(MetaEnv.EnvVar envVar) {
