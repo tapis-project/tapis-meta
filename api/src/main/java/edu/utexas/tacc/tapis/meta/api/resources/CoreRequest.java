@@ -24,8 +24,8 @@ public class CoreRequest {
   // fields
   private static String coreServiceUrl;  // look at a static init block
   private OkHttpClient okHttpClient = OkSingleton.getInstance();
-  private String pathUri;
-  private String pathURL;
+  private final String pathUri;
+  private final String pathURL;
   
   // constructor(s)
   public CoreRequest(String _pathUri){
@@ -229,12 +229,7 @@ public class CoreRequest {
     // path url here has stripped out /v3/meta to make the correct path request
     //  to core server
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    // RequestBody body = RequestBody.create(json, JSON);
-    // okhttp3.Request coreRequest = new Request.Builder()
-    //    .url(pathURL)
-    //    .post(body)
-    //    .build();
-    
+  
     Response response = null;
     CoreResponse coreResponse = new CoreResponse();
     try {

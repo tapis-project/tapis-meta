@@ -177,24 +177,6 @@ public class RuntimeParameters {
     buf.append("\n\n------- DB Configuration --------------------------");
 
 /*
-    buf.append("\n------- Email Configuration -----------------------");
-    buf.append("\ntapis.mail.provider: ");
-    buf.append(this.getEmailProviderType().name());
-    buf.append("\ntapis.smtp.auth: ");
-    buf.append(this.isEmailAuth());
-    buf.append("\ntapis.smtp.host: ");
-    buf.append(this.getEmailHost());
-    buf.append("\ntapis.smtp.port: ");
-    buf.append(this.getEmailPort());
-    buf.append("\ntapis.smtp.user: ");
-    buf.append(this.getEmailUser());
-    buf.append("\ntapis.smtp.from.name: ");
-    buf.append(this.getEmailFromName());
-    buf.append("\ntapis.smtp.from.address: ");
-    buf.append(this.getEmailFromAddress());
-*/
-    
-/*
     buf.append("\n------- Support Configuration ---------------------");
     buf.append("\ntapis.support.name: ");
     // buf.append(this.getSupportName());
