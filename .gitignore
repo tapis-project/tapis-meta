@@ -80,3 +80,5 @@ Icon
 /tools/environment/tapisdev.env
 /deployment/tapis-metaapi/logback.xml
 /deployment/kompose/.idea/
+/tools/analysis/
+/tools/http.testing/wrk-master/
