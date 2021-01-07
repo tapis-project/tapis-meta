@@ -224,32 +224,5 @@ public class CoreRequest {
     return coreResponse;
   }
   
-  // TODO --------------------------------  proxy Generic request  --------------------------------
-  public CoreResponse proxyRequest(okhttp3.Request coreRequest){
-    // path url here has stripped out /v3/meta to make the correct path request
-    //  to core server
-    MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-  
-    Response response = null;
-    CoreResponse coreResponse = new CoreResponse();
-    try {
-      response = okHttpClient.newCall(coreRequest).execute();
-      coreResponse.mapResponse(response);
-      response.close();
-    } catch (IOException e) {
-      StringBuilder msg = new StringBuilder()
-          .append("Connection to core server failed : ")
-          .append(e.getMessage());
-      _log.info(msg.toString());
-      // set a response to indicate server 500 error
-      coreResponse.setStatusCode(500);
-      coreResponse.setCoreMsg("Connection to core server failed");
-      coreResponse.setCoreResponsebody(coreResponse.getBasicResponse());
-    }
-    
-    _log.debug("call to host : "+pathURL+"\n"+"response : \n"+coreResponse.getCoreResponsebody());
-    
-    return coreResponse;
-  }
   
 }

@@ -175,14 +175,6 @@ public class RuntimeParameters {
     buf.append(this.getTokenBaseUrl());
     
     buf.append("\n\n------- DB Configuration --------------------------");
-
-/*
-    buf.append("\n------- Support Configuration ---------------------");
-    buf.append("\ntapis.support.name: ");
-    // buf.append(this.getSupportName());
-    buf.append("\ntapis.support.email: ");
-    // buf.append(this.getSupportEmail());
-*/
     
     buf.append("\n\n------- EnvOnly Configuration ---------------------");
     buf.append("\ntapis.envonly.log.security.info: ");
