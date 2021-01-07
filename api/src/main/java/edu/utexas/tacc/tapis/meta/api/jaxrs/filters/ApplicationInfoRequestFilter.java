@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import edu.utexas.tacc.tapis.meta.config.RuntimeParameters;
 import edu.utexas.tacc.tapis.shared.TapisConstants;
 
-import java.io.IOException;
+// import java.io.IOException;
 
 @Provider
 @Priority(TapisConstants.JAXRS_FILTER_PRIORITY_AFTER_AUTHENTICATION_3)
@@ -35,7 +35,7 @@ public class ApplicationInfoRequestFilter  implements ContainerRequestFilter {
   /* filter:                                                                */
   /* ---------------------------------------------------------------------- */
   @Override
-  public void filter(ContainerRequestContext containerRequestContext) throws IOException {
+  public void filter(ContainerRequestContext containerRequestContext) {
     // We only write our information on the first request to the application.
     if (!_firstRequest) return;
   

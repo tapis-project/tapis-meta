@@ -10,7 +10,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>edu.utexas.tacc.tapis</groupId>
     <artifactId>lib</artifactId>
 
 

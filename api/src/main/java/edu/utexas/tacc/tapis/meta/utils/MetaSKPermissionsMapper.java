@@ -3,10 +3,10 @@ package edu.utexas.tacc.tapis.meta.utils;
 import java.util.StringTokenizer;
 
 public class MetaSKPermissionsMapper {
-  private String uriPath;
-  public String meta = "meta";
-  public String op = "GET";
-  public String tenant;
+  private final String uriPath;
+  public final String meta = "meta";
+  // public String op = "GET";
+  public final String tenant;
   public String db="";
   public String collection="";
   public String document="";
@@ -26,7 +26,7 @@ public class MetaSKPermissionsMapper {
    * Converts the uri path into Shiro permissions format to use in an isPermitted
    * check against the SK.
    * @return  Shiro formatted permission string
-   * @param op
+   * @param op the operation requested
    */
   public String convert(String op){
     String pems = "";
@@ -39,23 +39,23 @@ public class MetaSKPermissionsMapper {
       int resources = st.countTokens();
       switch(resources){
         case 0 : {
-          return pems = meta+":"+tenant+":"+op+":"+db+":"+collection+":"+document;
+          return meta+":"+tenant+":"+op+":"+db+":"+collection+":"+document;
         }
         case 1 : {
           db = st.nextToken();
-          return pems = meta+":"+tenant+":"+op+":"+db+":"+collection+":"+document;
+          return meta+":"+tenant+":"+op+":"+db+":"+collection+":"+document;
         }
         case 2 : {
           db = st.nextToken();
           collection = st.nextToken();
-          return pems = meta+":"+tenant+":"+op+":"+db+":"+collection+":"+document;
+          return meta+":"+tenant+":"+op+":"+db+":"+collection+":"+document;
         }
         case 3 :
         case 4 : {
           db = st.nextToken();
           collection = st.nextToken();
           document = st.nextToken();
-          return pems = meta+":"+tenant+":"+op+":"+db+":"+collection+":"+document;
+          return meta+":"+tenant+":"+op+":"+db+":"+collection+":"+document;
         }
       }
     }
@@ -64,36 +64,31 @@ public class MetaSKPermissionsMapper {
   
   /**
    * Simple check to see if header values returned actually have something in them
-   * @param str
+   * @param str String to check
    * @return true or false
    */
   private static boolean notEmpty(String str){
-    if (str != null && !str.trim().isEmpty()) {
-      return true;
-    } else {
-      return false;
-    }
+    return str != null && !str.trim().isEmpty();
   }
   
   private static boolean notNull(String str){
-    if (str != null ) {
-      return true;
-    } else {
-      return false;
-    }
+    return str != null;
   }
   
+/*
   public String getMeta() {
     return meta;
   }
-  
+*/
+
+/*
   public void setMeta(String meta) {
     this.meta = meta;
   }
-  
-  public String getOp() {
-    return op;
-  }
+*/
+
+/*
+  public String getOp() { return op; }
   
   public void setOp(String op) {
     this.op = op;
@@ -106,29 +101,42 @@ public class MetaSKPermissionsMapper {
   public void setTenant(String tenant) {
     this.tenant = tenant;
   }
-  
+*/
+
+  /*
   public String getDb() {
     return db;
   }
-  
+*/
+
+/*
   public void setDb(String db) {
     this.db = db;
   }
-  
+*/
+
+/*
   public String getCollection() {
     return collection;
   }
-  
+*/
+
+/*
   public void setCollection(String collection) {
     this.collection = collection;
   }
-  
+*/
+
+/*
   public String getDocument() {
     return document;
   }
-  
+*/
+
+/*
   public void setDocument(String document) {
     this.document = document;
   }
-  
+*/
+
 }

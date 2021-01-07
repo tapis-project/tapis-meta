@@ -2,7 +2,7 @@ package edu.utexas.tacc.tapis.meta.api;
 
 import edu.utexas.tacc.tapis.meta.config.RuntimeParameters;
 import edu.utexas.tacc.tapis.shared.TapisConstants;
-import edu.utexas.tacc.tapis.shared.exceptions.TapisException;
+// import edu.utexas.tacc.tapis.shared.exceptions.TapisException;
 import edu.utexas.tacc.tapis.shared.security.ServiceContext;
 import edu.utexas.tacc.tapis.shared.security.TenantManager;
 import edu.utexas.tacc.tapis.sharedapi.jaxrs.filters.JWTValidateRequestFilter;
@@ -21,10 +21,10 @@ public class MetaApplication extends ResourceConfig {
   // Tracing.
   private static final Logger _log = LoggerFactory.getLogger(MetaApplication.class);
   
-  public MetaApplication() throws TapisException {
+  public MetaApplication() {
     // Log our existence.
     System.out.println("**** Starting tapis-metaapi ****");
-    
+    _log.info("**** Starting tapis-metaapi ****");
     // Register the swagger resources
     register(OpenApiResource.class);
     register(AcceptHeaderOpenApiResource.class);
@@ -37,7 +37,7 @@ public class MetaApplication extends ResourceConfig {
   
     // ---------------- Initialize Security Filter --------------
     // Required to process any requests.
-    JWTValidateRequestFilter.setService(runTime.SERVICE_NAME_META);
+    JWTValidateRequestFilter.setService(RuntimeParameters.SERVICE_NAME_META);
     JWTValidateRequestFilter.setSiteId(runTime.getSiteId());
 
     // ------------------- Recoverable Errors -------------------
@@ -63,8 +63,8 @@ public class MetaApplication extends ResourceConfig {
     }
     if (tenantMap != null) {
       System.out.println("**** SUCCESS:  " + tenantMap.size() + " tenants retrieved ****");
-      String s = "Tenants:\n";
-      for (String tenant : tenantMap.keySet()) s += "  " + tenant + "\n";
+      StringBuilder s = new StringBuilder("Tenants:\n");
+      for (String tenant : tenantMap.keySet()) s.append("  ").append(tenant).append("\n");
       System.out.println(s);
     } else
       System.out.println("**** FAILURE TO INITIALIZE: tapis-metaapi TenantManager - No Tenants ****");
@@ -85,8 +85,8 @@ public class MetaApplication extends ResourceConfig {
       int targetSiteCnt = targetSites != null ? targetSites.size() : 0;
       System.out.println("**** SUCCESS:  " + targetSiteCnt + " target sites retrieved ****");
       if (targetSites != null) {
-        String s = "Target sites:\n";
-        for (String site : targetSites) s += "  " + site + "\n";
+        StringBuilder s = new StringBuilder("Target sites:\n");
+        for (String site : targetSites) s.append("  ").append(site).append("\n");
         System.out.println(s);
       }
     }

@@ -8,8 +8,8 @@ import edu.utexas.tacc.tapis.shared.parameters.TapisEnv;
 import edu.utexas.tacc.tapis.shared.parameters.TapisInput;
 import edu.utexas.tacc.tapis.shared.security.ServiceJWT;
 import edu.utexas.tacc.tapis.shared.security.ServiceJWTParms;
-import edu.utexas.tacc.tapis.shared.uuid.TapisUUID;
-import edu.utexas.tacc.tapis.shared.uuid.UUIDType;
+// import edu.utexas.tacc.tapis.shared.uuid.TapisUUID;
+// import edu.utexas.tacc.tapis.shared.uuid.UUIDType;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -25,13 +25,13 @@ public class RuntimeParameters {
   private static final Logger _log = LoggerFactory.getLogger(RuntimeParameters.class);
   
   // Distinguished user-chosen name of this runtime instance.
-  private String  instanceName;
+  // private String  instanceName;
   
   // The site in which this service is running.
   private String  siteId;
   
   // Globally unique id that identifies this JVM instance.
-  private static final TapisUUID id = new TapisUUID(UUIDType.METADATA);
+  // private static final TapisUUID id = new TapisUUID(UUIDType.METADATA);
   
   // Singleton instance.
   private static RuntimeParameters _instance = initInstance();
@@ -55,7 +55,6 @@ public class RuntimeParameters {
   private String tenantBaseUrl = "";    // default "https://dev.develop.tapis.io/"
   private String skSvcURL      = "";    // default "https://dev.develop.tapis.io/v3"
   private String tokenBaseUrl  = "";    // default "https://dev.develop.tapis.io/"
-  private String metaToken;
   private ServiceJWT serviceJWT;
   private String servicePassword;
   
@@ -73,7 +72,7 @@ public class RuntimeParameters {
   
   private RuntimeParameters() throws TapisRuntimeException {
     TapisInput tapisInput = new TapisInput(RuntimeParameters.SERVICE_NAME_META);
-    Properties inputProperties = null;
+    Properties inputProperties;
     try {inputProperties = tapisInput.getInputParameters();}
     catch (TapisException e) {
       // Very bad news.
@@ -147,7 +146,7 @@ public class RuntimeParameters {
    * print their configuration parameters, including those from this class,
    * when they start up.
    *
-   * @param buf
+   * @param buf StringBuilder buffer
    */
   public void getRuntimeInfo(StringBuilder buf)
   {
@@ -238,11 +237,15 @@ public class RuntimeParameters {
   public String getTokenBaseUrl() { return tokenBaseUrl; }
   public void setTokenBaseUrl(String tokenBaseUrl) { this.tokenBaseUrl = tokenBaseUrl; }
   
+/*
   public String getMetaToken() {
     return metaToken;
   }
+*/
+
   public void setMetaToken(String metaToken) {
-    this.metaToken = metaToken;
+    // TODO used in test initialization
+    String token = metaToken;
   }
   
   public String getLogDirectory() {
