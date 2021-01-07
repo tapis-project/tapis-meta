@@ -103,6 +103,8 @@ public class CoreResponse {
     }
     // rewrite location
     try {
+      if(coreLocation == null)
+        coreLocation = "http://nolocation.info";
       URL coreLocationUrl = new URL(coreLocation);
       String corePath = coreLocationUrl.getPath();
   
@@ -137,15 +139,6 @@ public class CoreResponse {
   }
   
   // TODO use or lose
-/*
-  private void logResponseBody() {
-    _log.debug("response body output ");
-    _log.debug("size of response body : " + coreResponsebody);
-    if (coreResponsebody.length() > 0) {
-      _log.debug("response : \n" + coreResponsebody.toString());
-    }
-  }
-*/
   
   protected String getBasicResponse(String location){
     _log.debug("Location for basic response "+location);
@@ -184,18 +177,8 @@ public class CoreResponse {
   }
   
   // TODO use or lose
-/*
-  private void printMethod() {
-    _log.debug("http method used : " + this.method);
-  }
-*/
   
   // TODO use or lose
-/*
-  private void printResponseMsg() {
-    _log.debug("http msg returned : " + coreMsg);
-  }
-*/
   
   /*************************************************
    *   Getters and Setters
@@ -211,10 +194,6 @@ public class CoreResponse {
     this.coreResponsebody = coreResponsebody;
   }
   
-  // public String getMethod() { return method; }
-  
-  // public void setMethod(String method) { this.method = method; }
-  
   public int getStatusCode() {
     return statusCode;
   }
@@ -224,22 +203,6 @@ public class CoreResponse {
   }
   
   public String getEtag() { return etag; }
-  
-  // public void setEtag(String etag) { this.etag = etag; }
-  
-  // public boolean isBasicResponse() { return basicResponse; }
-  
-  // public void setBasicResponse(boolean basicResponse) { this.basicResponse = basicResponse; }
-  
-  // public String getLocation() { return location; }
-  
-  // public void setLocation(String location) { this.location = location; }
-  
-  // public String getDocumentId() { return documentId; }
-  
-  // public void setDocumentId(String documentId) { this.documentId = documentId; }
-  
-  // public String getCoreMsg() { return coreMsg; }
   
   public void setCoreMsg(String coreMsg) { this.coreMsg = coreMsg; }
 }

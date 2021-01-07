@@ -19,10 +19,6 @@ import javax.ws.rs.core.Context;
 // import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-// import java.io.IOException;
-// import java.util.Iterator;
-// import java.util.List;
-// import java.util.Map;
 
 @Provider
 @Priority(MetaAppConstants.META_FILTER_PRIORITY_PERMISSIONS)
@@ -122,8 +118,6 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
     boolean isPermitted = false;
   
     // these we being used as of 10.26/2020
-    // skClient.addDefaultHeader(MetaAppConstants.TAPIS_USER_HEADER_NAME, threadContext.getOboUser());
-    // skClient.addDefaultHeader(MetaAppConstants.TAPIS_TENANT_HEADER_NAME, threadContext.getOboTenantId());
     skClient.addDefaultHeader(MetaAppConstants.TAPIS_USER_HEADER_NAME, threadContext.getJwtUser());
     skClient.addDefaultHeader(MetaAppConstants.TAPIS_TENANT_HEADER_NAME, threadContext.getJwtTenantId());
   
@@ -204,19 +198,6 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
   }
 
   // TODO use or lose
-/*
-  private void debugRequestDump(TapisThreadContext threadContext,ContainerRequestContext requestContext){
-    _log.trace("Thread context ");
-    _log.trace("  account : "+threadContext.getAccountType().toString());
-    _log.trace("  tenant  : "+threadContext.getJwtTenantId());
-    _log.trace("  user    : "+threadContext.getJwtUser());
-    _log.trace("Request context ");
-    _log.trace("Headers  ");
-    MultivaluedMap<String,String> headers = requestContext.getHeaders();
-    headers.forEach((k, v)-> _log.trace("      Key: " + k + " Value: " + v));
-
-  }
-*/
-
+  
   
 }

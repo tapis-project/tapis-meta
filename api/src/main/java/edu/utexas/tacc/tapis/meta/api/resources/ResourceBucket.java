@@ -826,23 +826,6 @@ public class ResourceBucket {
   /*------------------------------------------------------------------------
    *      Helper methods shared across resource endpoints
    * -----------------------------------------------------------------------*/
-/*
-  private void requestDump() {
-
-    String pathUri = _request.getRequestURI();
-    StringBuffer pathUrl = _request.getRequestURL();
-    String queryString = _request.getQueryString();
-    String contextPath = _request.getContextPath();
-    
-    System.out.println(pathUri);
-    System.out.println(pathUrl);
-    System.out.println(queryString);
-    System.out.println(contextPath);
-    System.out.println();
-    
-    // String s = ((UriRoutingContext) _uriInfo).requestContext.requestUri.toString();
-  }
-*/
-
+  
 }
 

@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.NumberFormat;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Properties;
 
 public class RuntimeParameters {
@@ -237,15 +237,9 @@ public class RuntimeParameters {
   public String getTokenBaseUrl() { return tokenBaseUrl; }
   public void setTokenBaseUrl(String tokenBaseUrl) { this.tokenBaseUrl = tokenBaseUrl; }
   
-/*
-  public String getMetaToken() {
-    return metaToken;
-  }
-*/
-
   public void setMetaToken(String metaToken) {
-    // TODO used in test initialization
-    String token = metaToken;
+    // TODO used in test initialization only
+    _log.debug("Token for testing : "+metaToken);
   }
   
   public String getLogDirectory() {
@@ -280,7 +274,7 @@ public class RuntimeParameters {
     serviceJWTParms.setServiceName(RuntimeParameters.SERVICE_USER_NAME);
     serviceJWTParms.setTenant(RuntimeParameters.SERVICE_TENANT_NAME);
     serviceJWTParms.setTokensBaseUrl(this.getTenantBaseUrl());
-    serviceJWTParms.setTargetSites(Arrays.asList(getSiteId()));
+    serviceJWTParms.setTargetSites(Collections.singletonList(getSiteId()));
     serviceJWT = null;
     try {
       serviceJWT = new ServiceJWT(serviceJWTParms, TapisEnv.get(TapisEnv.EnvVar.TAPIS_SERVICE_PASSWORD));

@@ -4,6 +4,7 @@
 
     <!-- Main BOM file defines organization, licenses, developers, repositories,
          shared properties, dependency management, plugin management  -->
+    <!--suppress CheckTagEmptyBody -->
     <parent>
       <groupId>edu.utexas.tacc.tapis</groupId>
       <artifactId>tapis-bom</artifactId>
