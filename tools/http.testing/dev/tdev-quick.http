@@ -1,6 +1,6 @@
 ##############################################################
 #      Tests use meta.admin.regression service token
-#       run with env meta.admin.regression
+#       run with env meta.admin
 #
 #  Assumes: StreamsDevDB exists and meta admin permissions are set
 #           collection and other resources do not exist
@@ -9,12 +9,34 @@
 ##############################################################
 
 ###  sanity test to see if service is alive
-GET http://dev.develop.tapis.io/v3/meta/healthcheck
+GET https://dev.develop.tapis.io/v3/meta/healthcheck
 Content-Type: application/json
 ###
 
-#  List collections in db /v3/meta/StreamsDevDB
+##############################################################
+#    root
+#    Server root that hosts databases.
+##############################################################
+###  listDBNames /meta/
+GET https://dev.develop.tapis.io/v3/meta
+X-Tapis-Token: {{token}}
+X-Tapis-User: {{user}}
+X-Tapis-Tenant: {{tenant}}
+Content-Type: application/json
 ###
+# issue must have a trailing slash or this will be returned
+# {
+#   "http status code": 400,
+#   "http status description": "Bad Request",
+#   "message": "illegal database name, see https://docs.mongodb.org/v3.2/reference/limits/#naming-restrictions"
+# }
+
+##############################################################
+#    db
+#    The databases listed in host.
+##############################################################
+
+###  listCollectionNames /meta/{db}
 GET https://dev.develop.tapis.io/v3/meta/StreamsDevDB
 X-Tapis-Token: {{token}}
 X-Tapis-User: {{user}}
@@ -22,6 +44,16 @@ X-Tapis-Tenant: {{tenant}}
 Content-Type: application/json
 ###
 
+###  TODO createDB /meta/{db}
+###  TODO deleteDB /meta/{db}
+
+###  getDBMetadata /meta/{db}/_meta
+GET https://dev.develop.tapis.io/v3/meta/StreamsDevDB/_meta
+X-Tapis-Token: {{token}}
+X-Tapis-User: {{user}}
+X-Tapis-Tenant: {{tenant}}
+Content-Type: application/json
+###
 
 ##############################################################
 #      setup for tests using creates for needed resources
@@ -30,8 +62,14 @@ Content-Type: application/json
 #  Assumes collection and other resources do not exist
 ##############################################################
 
+
+##############################################################
+#    collection
+#    The collections hosted in a database.
+##############################################################
+
 #  create a test collection tstTmp in db /v3/meta/db/collection
-###
+###  createCollection /meta/{db}/{collection}
 PUT https://dev.develop.tapis.io/v3/meta/StreamsDevDB/tstTmp
 X-Tapis-Token: {{token}}
 X-Tapis-User: {{user}}
@@ -39,8 +77,28 @@ X-Tapis-Tenant: {{tenant}}
 Content-Type: application/json
 ###
 
-#  create a document in /v3/meta/StreamsDevDB/tstTmp
-# adding a name on the end of a PUT will create a document by that name and basic response  !!! PUT doesn't return basic response
+# TODO need to add to openapi definition
+###  getCollectionMetadata /meta/{db}/{collection}/_meta
+GET https://dev.develop.tapis.io/v3/meta/StreamsDevDB/tstTmp/_meta
+X-Tapis-Token: {{token}}
+X-Tapis-User: {{user}}
+X-Tapis-Tenant: {{tenant}}
+Content-Type: application/json
+###
+
+###  listDocuments /meta/{db}/{collection}
+GET https://dev.develop.tapis.io/v3/meta/StreamsDevDB/tstTmp
+X-Tapis-Token: {{token}}
+X-Tapis-User: {{user}}
+X-Tapis-Tenant: {{tenant}}
+Content-Type: application/json
+###
+
+
+
+#  create a document in /v3/meta/{db}/{collection}
+# adding a name on the end of a POST will create a document by that name
+# and adding basic query parameter will return a basic response with document id.
 ###
 POST https://dev.develop.tapis.io/v3/meta/StreamsDevDB/tstTmp?basic=true
 X-Tapis-Token: {{token}}
