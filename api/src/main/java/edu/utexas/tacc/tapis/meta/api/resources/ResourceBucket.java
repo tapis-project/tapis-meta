@@ -312,23 +312,8 @@ public class ResourceBucket {
   
     // Get the json payload to proxy to back end
     StringBuilder jsonPayloadToProxy = new StringBuilder();
-  
-    try {
-      BufferedReader in = new BufferedReader(new InputStreamReader(payload));
-      String line;
-      while ((line = in.readLine()) != null) {
-        jsonPayloadToProxy.append(line);
-      }
-    } catch (Exception e) {
-      _log.debug("Error Parsing: - ");
-      // TODO
-    }
-  
-    _log.debug("Data Received: " + jsonPayloadToProxy.toString());
-
-    // Proxy the POST request and handle any exceptions
-    CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
-    CoreResponse coreResponse = coreRequest.proxyPostRequest(jsonPayloadToProxy.toString());
+    // Get the json payload to proxy to back end
+    CoreResponse coreResponse = this.getResponse(payload,jsonPayloadToProxy);
   
     String result;
     String etag = coreResponse.getEtag();
@@ -494,24 +479,8 @@ public class ResourceBucket {
   
     // Get the json payload to proxy to back end
     StringBuilder jsonPayloadToProxy = new StringBuilder();
+    CoreResponse coreResponse = this.getResponse(payload, jsonPayloadToProxy);
     
-    try {
-      BufferedReader in = new BufferedReader(new InputStreamReader(payload));
-      String line;
-      while ((line = in.readLine()) != null) {
-        jsonPayloadToProxy.append(line);
-      }
-    } catch (Exception e) {
-      _log.debug("Error Parsing: - ");
-      // TODO
-    }
-    
-    _log.debug("Data Received: " + jsonPayloadToProxy.toString());
-    
-    // Proxy the POST request and handle any exceptions
-    CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
-    CoreResponse coreResponse = coreRequest.proxyPutRequest(jsonPayloadToProxy.toString());
-  
     //---------------------------- Response -------------------------------
     // just return whatever core server sends to us
     return javax.ws.rs.core.Response.status(coreResponse.getStatusCode()).entity(coreResponse.getCoreResponsebody()).build();
@@ -577,26 +546,10 @@ public class ResourceBucket {
       _log.trace(msg);
       _log.trace("Put a document in " + db +"/"+ collection);
     }
-    
+  
     // Get the json payload to proxy to back end
     StringBuilder jsonPayloadToProxy = new StringBuilder();
-    
-    try {
-      BufferedReader in = new BufferedReader(new InputStreamReader(payload));
-      String line;
-      while ((line = in.readLine()) != null) {
-        jsonPayloadToProxy.append(line);
-      }
-    } catch (Exception e) {
-      _log.debug("Error Parsing: - ");
-      // TODO
-    }
-    
-    _log.debug("Data Received: " + jsonPayloadToProxy.toString());
-    
-    // Proxy the POST request and handle any exceptions
-    CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
-    CoreResponse coreResponse = coreRequest.proxyPutRequest(jsonPayloadToProxy.toString());
+    CoreResponse coreResponse = this.getResponse(payload, jsonPayloadToProxy);
     
     //---------------------------- Response -------------------------------
     // just return whatever core server sends to us
@@ -619,27 +572,11 @@ public class ResourceBucket {
       _log.trace(msg);
       _log.trace("Patch document in " + db +"/"+ collection);
     }
-    
+  
     // Get the json payload to proxy to back end
     StringBuilder jsonPayloadToProxy = new StringBuilder();
+    CoreResponse coreResponse = this.getResponse(payload, jsonPayloadToProxy);
     
-    try {
-      BufferedReader in = new BufferedReader(new InputStreamReader(payload));
-      String line;
-      while ((line = in.readLine()) != null) {
-        jsonPayloadToProxy.append(line);
-      }
-    } catch (Exception e) {
-      _log.debug("Error Parsing: - ");
-      // TODO
-    }
-    
-    _log.debug("Data Received: " + jsonPayloadToProxy.toString());
-    
-    // Proxy the POST request and handle any exceptions
-    CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
-    CoreResponse coreResponse = coreRequest.proxyPatchRequest(jsonPayloadToProxy.toString());
-  
     //---------------------------- Response -------------------------------
     // just return whatever core server sends to us
     return javax.ws.rs.core.Response.status(coreResponse.getStatusCode()).entity(coreResponse.getCoreResponsebody()).build();
@@ -693,23 +630,7 @@ public class ResourceBucket {
   
     // Get the json payload to proxy to back end
     StringBuilder jsonPayloadToProxy = new StringBuilder();
-  
-    try {
-      BufferedReader in = new BufferedReader(new InputStreamReader(payload));
-      String line;
-      while ((line = in.readLine()) != null) {
-        jsonPayloadToProxy.append(line);
-      }
-    } catch (Exception e) {
-      _log.debug("Error Parsing: - ");
-      // TODO
-    }
-  
-    _log.debug("Data Received: " + jsonPayloadToProxy.toString());
-  
-    // Proxy the PUT request and handle any exceptions
-    CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
-    CoreResponse coreResponse = coreRequest.proxyPutRequest(jsonPayloadToProxy.toString());
+    CoreResponse coreResponse = this.getResponse(payload, jsonPayloadToProxy);
   
     //---------------------------- Response -------------------------------
     // just return whatever core server sends to us
@@ -770,27 +691,8 @@ public class ResourceBucket {
     StringBuilder jsonPayloadToProxy = new StringBuilder();
     // we will assign the payload to an avars Query parameter to RH core server.
     jsonPayloadToProxy.append("?avars=");
-    
-    try {
-      BufferedReader in = new BufferedReader(new InputStreamReader(payload));
-      String line;
-      while ((line = in.readLine()) != null) {
-        jsonPayloadToProxy.append(line);
-      }
-    } catch (Exception e) {
-      _log.debug("Error Parsing: - ");
-      // TODO
-    }
-    
-    _log.debug("Data Received: " + jsonPayloadToProxy.toString());
-    
-    String inComingRequest = _request.getRequestURI();
   
-    // Proxy the POST request and handle any exceptions
-    String newUriPath = inComingRequest +
-        jsonPayloadToProxy.toString() + "&" + _request.getQueryString();///meta/v3/v1airr/rearrangement/_aggrs/facets
-    CoreRequest coreRequest = new CoreRequest(newUriPath);
-    CoreResponse coreResponse = coreRequest.proxyPostRequest(jsonPayloadToProxy.toString());
+    CoreResponse coreResponse = this.getResponse(payload,jsonPayloadToProxy);
     
     //---------------------------- Response -------------------------------
     // just return whatever core server sends to us
@@ -826,6 +728,25 @@ public class ResourceBucket {
   /*------------------------------------------------------------------------
    *      Helper methods shared across resource endpoints
    * -----------------------------------------------------------------------*/
+  private CoreResponse getResponse(InputStream payload, StringBuilder jsonPayloadToProxy){
   
+    try {
+      BufferedReader in = new BufferedReader(new InputStreamReader(payload));
+      String line;
+      while ((line = in.readLine()) != null) {
+        jsonPayloadToProxy.append(line);
+      }
+    } catch (Exception e) {
+      _log.debug("Error Parsing: - ");
+      // TODO
+    }
+  
+    _log.debug("Data Received: " + jsonPayloadToProxy.toString());
+  
+    // Proxy the request and handle any exceptions
+    CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
+  
+    return coreRequest.proxyPostRequest(jsonPayloadToProxy.toString());
+  }
 }
 

@@ -18,7 +18,7 @@ Content-Type: application/json
 #    Server root that hosts databases.
 ##############################################################
 ###  listDBNames /meta/
-GET https://dev.develop.tapis.io/v3/meta
+GET https://dev.develop.tapis.io/v3/meta/
 X-Tapis-Token: {{token}}
 X-Tapis-User: {{user}}
 X-Tapis-Tenant: {{tenant}}
@@ -139,7 +139,7 @@ Content-Type: application/json
 
 
 
-
+#####     break for additions
 
 
 
