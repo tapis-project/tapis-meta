@@ -81,15 +81,9 @@ public class CoreResponse {
     }
   }
   
-  // TODO use or discard
-  
   private void captureResponseMsg(okhttp3.Response coreResponse){
     coreMsg = coreResponse.message();
   }
-  
-  // TODO use or discard
-  
-  // TODO use or discard
   
   public String getLocationFromHeaders(){
     String coreLocation = null;
@@ -138,8 +132,6 @@ public class CoreResponse {
     return sb;
   }
   
-  // TODO use or lose
-  
   protected String getBasicResponse(String location){
     _log.debug("Location for basic response "+location);
     RespBasic resp = new RespBasic();
@@ -175,10 +167,6 @@ public class CoreResponse {
     }
     return oid;
   }
-  
-  // TODO use or lose
-  
-  // TODO use or lose
   
   /*************************************************
    *   Getters and Setters

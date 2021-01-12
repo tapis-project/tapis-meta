@@ -180,7 +180,8 @@ public class ResourceBucket {
     return javax.ws.rs.core.Response.status(coreResponse.getStatusCode()).entity(coreResponse.getCoreResponsebody()).build();
   }
   
-  // TODO in administrative interface ----------------  Delete DB ----------------
+  // TODO move to administrative interface
+  //----------------  Delete DB ----------------
   @DELETE
   @Path("/{db}")
   @Produces(MediaType.APPLICATION_JSON)
@@ -737,8 +738,8 @@ public class ResourceBucket {
         jsonPayloadToProxy.append(line);
       }
     } catch (Exception e) {
+      // TODO expanded message
       _log.debug("Error Parsing: - ");
-      // TODO
     }
   
     _log.debug("Data Received: " + jsonPayloadToProxy.toString());

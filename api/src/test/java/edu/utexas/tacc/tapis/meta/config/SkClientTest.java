@@ -3,8 +3,6 @@ package edu.utexas.tacc.tapis.meta.config;
 import edu.utexas.tacc.tapis.client.shared.exceptions.TapisClientException;
 import edu.utexas.tacc.tapis.security.client.SKClient;
 
-import java.util.List;
-
 
 public class SkClientTest {
   public static void main(String[] args) throws TapisClientException
@@ -14,14 +12,12 @@ public class SkClientTest {
     
     SKClient skClient = new SKClient(url,jwt);
     // Service to Service calls require user header, set it to be the same as the service name
-    // TODO Get string constants from shared code when available
     String TAPIS_USER_HEADER = "X-Tapis-User";
     String TAPIS_TENANT_HEADER = "X-Tapis-Tenant";
     
     skClient.addDefaultHeader(TAPIS_USER_HEADER, "streams");
-    // todo this will change based on header processing so just hardwire for now
-    skClient.addDefaultHeader(TAPIS_TENANT_HEADER, "master");
-    Boolean isAuthorized = skClient.isPermitted("dev","streams", "meta:dev:GET,POST,PUT:StreamsTACCDB:*:*");
+    skClient.addDefaultHeader(TAPIS_TENANT_HEADER, "admin");
+    Boolean isAuthorized = skClient.isPermitted("admin","streams", "meta:admin:GET,POST,PUT:StreamsDevDB:*:*");
     // List roles = skClient.getUserNames();
     System.out.println(isAuthorized);
     

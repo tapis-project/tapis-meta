@@ -166,7 +166,4 @@ public class CoreRequest {
   
     return coreResponse;
   }
-  
-  // TODO --------------------------------  proxy Generic request  --------------------------------
-  
 }

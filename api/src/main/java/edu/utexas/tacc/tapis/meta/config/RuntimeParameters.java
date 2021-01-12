@@ -238,7 +238,6 @@ public class RuntimeParameters {
   public void setTokenBaseUrl(String tokenBaseUrl) { this.tokenBaseUrl = tokenBaseUrl; }
   
   public void setMetaToken(String metaToken) {
-    // TODO used in test initialization only
     _log.debug("Token for testing : "+metaToken);
   }
   

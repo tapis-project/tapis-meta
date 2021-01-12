@@ -196,8 +196,6 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
     permSpec = mapper.convert(requestMethod);
     return permSpec;
   }
-
-  // TODO use or lose
   
   
 }
