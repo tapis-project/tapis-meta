@@ -53,7 +53,7 @@ public class CoreRequest {
     
     CoreResponse coreResponse = createResponse(coreRequest);
   
-    _log.debug("call to host : GET "+pathURL+"\n"+"response : \n"+coreResponse.getCoreResponsebody());
+    _log.debug("call to host : GET "+pathURL+"\nresponse : \n"+coreResponse.getCoreResponsebody());
     
     return coreResponse;
   }

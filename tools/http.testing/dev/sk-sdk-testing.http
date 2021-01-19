@@ -1,7 +1,41 @@
+##########################################################################
+#   tests with testuser2:dev user token with meta:admin requesting
+##########################################################################
+
+### SK get permissions for user testuser2 using meta:admin service token
+# obo testuser7 in tenant dev
+GET https://dev.develop.tapis.io/v3/security/user/perms/testuser2?tenant=dev
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant:admin
+Content-Type: application/json
+
+###
+### SK isPermitted for user
+POST https://dev.develop.tapis.io/v3/security/user/isPermitted?tenant=dev
+X-Tapis-Token: {{token}}
+X-Tapis-User: streams
+X-Tapis-Tenant:dev
+Content-Type: application/json
+
+{"user":"testuser2","tenant":"dev","permSpec":"meta:dev:GET:StreamsDevDB:*:*"}
+
+###
+
+### SK grant permissions for testuser2:dev to MyTstDB READ only
+POST https://dev.develop.tapis.io/v3/security/user/grantUserPermission?tenant=dev
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant:admin
+Content-Type: application/json
+
+{"user":"testuser2","tenant":"dev","permSpec":"meta:dev:GET:StreamsDevDB:*:*"}
+
+###
+
+
 ######################################################
-#
 #   tests with testuser7:dev user token
-#
 ######################################################
 
 ### SK get permissions for user testuser7 using meta:admin service token
