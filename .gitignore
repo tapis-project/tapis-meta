@@ -82,3 +82,4 @@ Icon
 /deployment/kompose/.idea/
 /tools/analysis/
 /tools/http.testing/wrk-master/
+/tools/http.testing/jmeter.load.tests/test-results/
