@@ -84,3 +84,4 @@ Icon
 /tools/http.testing/wrk-master/
 /tools/http.testing/jmeter.load.tests/test-results/
 /.run/
+/tools/http.testing/jmeter.load.tests/archive/
