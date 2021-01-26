@@ -7,6 +7,15 @@ GET https://dev.develop.tapis.io/v3/meta/healthcheck
 
 ###
 
+###  sanity test to see if service is alive
+GET http://c002.rodeo.tacc.utexas.edu:31239/v3/meta/healthcheck
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+###
+
 ##################################### meta user #################################################
 # meta  these tests are hitting the dev deployment of RH-core
 # run with meta.admin service token settings
@@ -17,7 +26,7 @@ GET https://dev.develop.tapis.io/v3/meta/healthcheck
 
 #  HAPPY Path
 ###   db list collections
-GET https://dev.develop.tapis.io/v3/meta/MyTstDB
+GET https://dev.develop.tapis.io/v3/meta/StreamsDevDB
 X-Tapis-Token: {{token}}
 X-Tapis-User: meta
 X-Tapis-Tenant: admin
