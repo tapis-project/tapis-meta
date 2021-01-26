@@ -6,5 +6,5 @@
 # Check : https://jmeter.apache.org/usermanual/best-practices.html
 
 export HEAP="-Xms2g -Xmx2g -XX:MaxMetaspaceSize=256m"
-jmeter -n -t meta-Group.jmx -l ./test-results/report-25.01.2021-dev.develop/results.csv -e -o ./test-results/report-25.01.2021-dev.develop
+jmeter -n -t meta-Group.jmx -l ./test-results/results/results.csv -e -o ./test-results/results
 
