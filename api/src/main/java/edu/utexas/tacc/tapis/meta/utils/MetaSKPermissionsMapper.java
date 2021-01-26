@@ -5,12 +5,10 @@ import java.util.StringTokenizer;
 public class MetaSKPermissionsMapper {
   private final String uriPath;
   public final String meta = "meta";
-  // public String op = "GET";
   public final String tenant;
   public String db="";
   public String collection="";
   public String document="";
-  // public String
   
   /**
    * constructor for uripath mapping to sk permission spec
