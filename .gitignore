@@ -85,3 +85,6 @@ Icon
 /tools/http.testing/jmeter.load.tests/test-results/
 /.run/
 /tools/http.testing/jmeter.load.tests/archive/
+/.img/
+/.css/
+/edu.utexas.tacc.tapis.meta.config/
