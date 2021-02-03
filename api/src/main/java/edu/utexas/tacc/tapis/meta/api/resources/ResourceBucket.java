@@ -8,16 +8,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.security.PermitAll;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -470,6 +461,7 @@ public class ResourceBucket {
                                                @PathParam("collection") String collection,
                                                @PathParam("indexName") String indexName,
                                                InputStream payload) {
+    
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -730,7 +722,7 @@ public class ResourceBucket {
    *      Helper methods shared across resource endpoints
    * -----------------------------------------------------------------------*/
   private CoreResponse getResponse(InputStream payload, StringBuilder jsonPayloadToProxy){
-  
+    _log.debug("In ResourceBucket getReponse helper method");
     try {
       BufferedReader in = new BufferedReader(new InputStreamReader(payload));
       String line;
@@ -746,8 +738,24 @@ public class ResourceBucket {
   
     // Proxy the request and handle any exceptions
     CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
-  
-    return coreRequest.proxyPostRequest(jsonPayloadToProxy.toString());
+    // get the method to proxy
+    String httpMethod = _request.getMethod();
+    switch (httpMethod) {
+      case HttpMethod.POST:      // createDocument, submitLargeAggregation
+        _log.debug("getResponse POST");
+        return coreRequest.proxyPostRequest(jsonPayloadToProxy.toString());
+      case HttpMethod.PUT:       // createIndex, replaceDocument, addAggregation
+        _log.debug("getResponse PUT");
+        return coreRequest.proxyPutRequest(jsonPayloadToProxy.toString());
+      case  HttpMethod.PATCH:    // modifyDocument
+        _log.debug("getResponse PATCH");
+        return coreRequest.proxyPatchRequest(jsonPayloadToProxy.toString());
+      default:
+        // TODO return null here if there is an invalid httpmethod.
+        throw new IllegalArgumentException("Invalid http method: " + httpMethod);
+    }
+    // return coreRequest.proxyPostRequest(jsonPayloadToProxy.toString());
   }
+  
 }
 
