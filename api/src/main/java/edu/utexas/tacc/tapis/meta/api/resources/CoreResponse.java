@@ -148,7 +148,7 @@ public class CoreResponse {
     RespBasic resp = new RespBasic();
     resp.status = String.valueOf(this.getStatusCode());
     resp.message = this.coreMsg;
-    resp.version = TapisUtils.getTapisVersion();
+    resp.version = TapisUtils.getTapisVersion() +" "+TapisUtils.getGitCommit();
     resp.result = "";
     return TapisGsonUtils.getGson().toJson(resp);
   }
