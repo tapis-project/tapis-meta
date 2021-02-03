@@ -304,3 +304,14 @@ Content-Type: application/json
 %}
 ###
 
+# create an index on collection
+###
+PUT https://dev.develop.tapis.io/v3/meta/StreamsDevDB/tstTmp/_indexes/testIndex
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+{"keys": { "document.lat": 1 } }
+
+###

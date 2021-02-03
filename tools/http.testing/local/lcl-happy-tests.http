@@ -159,10 +159,10 @@ Content-Type: application/json
 ##############################################################
 # get a list of indexes on collection
 ###
-GET http://localhost:8080/v3/meta/StreamsTACCDB/sltCollectionTst/_indexes
+GET http://localhost:8080/v3/meta/StreamsDevDB/wq_demo_tapis_proj12020-12-15T17:33:51.447879/_indexes
 X-Tapis-Token: {{token}}
-X-Tapis-User: streams
-X-Tapis-Tenant: master
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###
