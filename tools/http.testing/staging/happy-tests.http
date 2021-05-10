@@ -5,7 +5,7 @@ GET https://admin.staging.tapis.io/v3/meta/healthcheck
 # X-Tapis-Tenant: admin
 ###
 
-#  get a default document list under StreamsTACCDB/Proj1 /v3/meta/StreamsTACCDB/Proj1
+#  get a default document list under StreamsStagingDB/Proj1 /v3/meta/StreamsStagingDB/Proj1
 ###
 GET https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/testcoll
 X-Tapis-Token: {{token}}
@@ -27,7 +27,7 @@ Content-Type: application/json
 
 ###
 
-#  get a default document list under StreamsTACCDB/Proj1 /v3/meta/StreamsTACCDB/Proj1
+#  get a default document list under StreamsStagingDB/Proj1 /v3/meta/StreamsStagingDB/Proj1
 ###
 GET https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/testcoll/_indexes
 X-Tapis-Token: {{token}}
@@ -77,7 +77,7 @@ Content-Type: application/json
 
 # get collection metadata
 ###
-GET https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/4-2-coll-tst/_meta
+GET https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/4-2-coll-tst/_meta
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -87,7 +87,7 @@ Content-Type: application/json
 
 # create a collection in a db
 ###
-PUT https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/4-2-coll-tst
+PUT https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/4-2-coll-tst
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -97,7 +97,7 @@ Content-Type: application/json
 
 # delete a collection in a db
 ###
-DELETE https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/4-2-coll-tst
+DELETE https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/4-2-coll-tst
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -107,9 +107,9 @@ Content-Type: application/json
 
 ###
 
-#  get a default document list under StreamsTACCDB/Proj1 /v3/meta/StreamsTACCDB/Proj1
+#  get a default document list under StreamsStagingDB/Proj1 /v3/meta/StreamsStagingDB/Proj1
 ###
-GET https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/Proj1
+GET https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/Proj1
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -117,9 +117,9 @@ Content-Type: application/json
 
 ###
 
-#  query for documents under StreamsTACCDB/Proj1 /v3/meta/StreamsTACCDB/Proj1 returns a list of documents
+#  query for documents under StreamsStagingDB/Proj1 /v3/meta/StreamsStagingDB/Proj1 returns a list of documents
 ###
-GET https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/Proj1?filter={'name':'test document 33'}&np=true
+GET https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/Proj1?filter={'name':'test document 33'}&np=true
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -127,11 +127,11 @@ Content-Type: application/json
 
 ###
 
-# /v3/meta/StreamsTACCDB/Proj1   streams
+# /v3/meta/StreamsStagingDB/Proj1   streams
 # create a document in a collection
-#  post with request body to StreamsTACCDB /v3/meta/StreamsTACCDB/Proj1
+#  post with request body to StreamsStagingDB /v3/meta/StreamsStagingDB/Proj1
 ###
-POST https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/Proj1
+POST https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/Proj1
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -146,9 +146,9 @@ Content-Type: application/json
 #     document endpoints
 ##############################################################
 #  update a document
-#  put with no arguements to StreamsTACCDB /v3/meta/StreamsTACCDB/
+#  put with no arguements to StreamsStagingDB /v3/meta/StreamsStagingDB/
 ###
-PUT https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/Proj1/5e29ffe1a93eebf39fba93c4
+PUT https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/Proj1/5e29ffe1a93eebf39fba93c4
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -156,10 +156,10 @@ Content-Type: application/json
 
 ###
 
-#  get a document from StreamsTACCDB/Proj1/5e29ffe1a93eebf39fba93c4 /v3/meta/StreamsTACCDB/Proj1
+#  get a document from StreamsStagingDB/Proj1/5e29ffe1a93eebf39fba93c4 /v3/meta/StreamsStagingDB/Proj1
 ###
 
-GET https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/Proj1/5e29ffe1a93eebf39fba93c4
+GET https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/Proj1/5e29ffe1a93eebf39fba93c4
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -168,12 +168,12 @@ Content-Type: application/json
 ###
 
 
-# /v3/meta/StreamsTACCDB/Proj1/   streams
-#  delete with StreamsTACCDB /v3/meta/StreamsTACCDB/5e4bff5ea93eebf39fbecda1
+# /v3/meta/StreamsStagingDB/Proj1/   streams
+#  delete with StreamsStagingDB /v3/meta/StreamsStagingDB/5e4bff5ea93eebf39fbecda1
 ###
 
 
-DELETE https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/Proj1/tstLatIndex
+DELETE https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/Proj1/tstLatIndex
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -187,7 +187,7 @@ Content-Type: application/json
 ##############################################################
 # get a list of indexes on collection
 ###
-GET https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/sltCollectionTst/_indexes
+GET https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/sltCollectionTst/_indexes
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -197,7 +197,7 @@ Content-Type: application/json
 
 # create an index on collection
 ###
-PUT https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/sltCollectionTst/_indexes/name1
+PUT https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/sltCollectionTst/_indexes/name1
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -209,7 +209,7 @@ Content-Type: application/json
 
 # delete an index on collection
 ###
-DELETE https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/sltCollectionTst/_indexes/name1
+DELETE https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/sltCollectionTst/_indexes/name1
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -220,9 +220,9 @@ Content-Type: application/json
 
 
 # streams
-#  delete with StreamsTACCDB /v3/meta/StreamsTACCDB/
+#  delete with StreamsStagingDB /v3/meta/StreamsStagingDB/
 ###
-DELETE https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/Proj1
+DELETE https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/Proj1
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -234,9 +234,9 @@ Content-Type: application/json
 
 
 
-#  post with no args to StreamsTACCDB /v3/meta/StreamsTACCDB/
+#  post with no args to StreamsStagingDB /v3/meta/StreamsStagingDB/
 ###
-POST https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/Proj1/5e29ffe1a93eebf39fba93c4
+POST https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/Proj1/5e29ffe1a93eebf39fba93c4
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
@@ -245,9 +245,9 @@ Content-Type: application/json
 ###
 
 
-#  delete with StreamsTACCDB /v3/meta/StreamsTACCDB/
+#  delete with StreamsStagingDB /v3/meta/StreamsStagingDB/
 ###
-DELETE https://admin.staging.tapis.io/v3/meta/StreamsTACCDB/Proj1
+DELETE https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/Proj1
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin

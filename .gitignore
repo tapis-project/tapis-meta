@@ -88,3 +88,4 @@ Icon
 /.img/
 /.css/
 /edu.utexas.tacc.tapis.meta.config/
+/deployment/mongodb-latest/.docker/mongodb/data/db/

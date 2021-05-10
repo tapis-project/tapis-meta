@@ -1,0 +1,305 @@
+##################################### meta service user #################################################
+# meta  these tests are hitting the prod deployment
+# data :
+##############################################################
+#     General endpoints
+##############################################################
+#   healthcheck
+###  api:1
+GET https://admin.prod.tapis.io/v3/meta/healthcheck
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###   api:1
+
+
+##############################################################
+#      Root endpoints
+##############################################################
+
+#   root lists DBs
+###  api:1
+GET https://admin.prod.tapis.io/v3/meta/
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###   api:1
+
+##################################### meta user #################################################
+# meta admin user and token
+
+##############################################################
+#      DB endpoints
+##############################################################
+
+#   db exists and lists Collections
+###  api:3
+GET https://master.tapis.io/v3/meta/StreamsProdDB
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###   api:3
+
+#   db exists and lists Collections
+###  api:3
+GET https://master.tapis.io/v3/meta/StreamsTACCDB
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###   api:3
+
+##############################################################
+#     Collection endpoints
+##############################################################
+
+# create a collection in a db
+###
+PUT https://master.tapis.io/v3/meta/StreamsProdDB/4-2-coll-tst
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201");
+});
+%}
+
+###
+
+# get collection metadata
+###
+GET https://master.tapis.io/v3/meta/StreamsProdDB/4-2-coll-tst/_meta
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
+
+# delete a collection in a db
+###
+DELETE https://master.tapis.io/v3/meta/StreamsProdDB/4-2-coll-tst
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+If-Match: 5e8dd2019e0e923a1874e332
+Content-Type: application/json
+
+
+###
+
+#  get a default document list under StreamsProdDB/Proj1 /v3/meta/StreamsProdDB/Proj1
+###
+GET https://master.tapis.io/v3/meta/StreamsProdDB/Proj1
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+###
+
+#  query for documents under StreamsProdDB/Proj1 /v3/meta/StreamsProdDB/Proj1 returns a list of documents
+###
+GET https://master.tapis.io/v3/meta/StreamsProdDB/Proj1?filter={'name':'test document 33'}&np=true
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+###
+
+# /v3/meta/StreamsProdDB/Proj1   meta
+# create a document in a collection
+#  post with request body to StreamsProdDB /v3/meta/StreamsProdDB/Proj1
+###
+POST https://master.tapis.io/v3/meta/StreamsProdDB/Proj1
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+{ "name": "test document 4.2-11:13", "jimmyList":["1","3"],"description": "new whatever"}
+
+###  result 201  er  Created ETag: 5e4c4e6b537bd1305796e5e4
+
+#  create a document in /v3/meta/{{db}}/{{collection}}
+# adding a name on the end of a PUT will create a document by that name and basic response  !!! PUT doesn't return basic response
+###
+POST https://dev.develop.tapis.io/v3/meta/{{db}}/{{collection}}?basic=true
+X-Tapis-Token: {{token}}
+X-Tapis-User: {{user}}
+X-Tapis-Tenant: {{tenant}}
+Content-Type: application/json
+
+{ "name": "test document slt 4.28.2020-15:43", "jimmyList":["1","3"],"description": "POST a new document with basic response"}
+
+> {%
+    client.test("Create document in collection executed successfully", function() {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+
+    client.test("Response content-type is json", function() {
+        var type = response.contentType.mimeType;
+        client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+    });
+%}
+
+###  id 5ea9e6fea93eebf39fcd2601
+
+
+##############################################################
+#     document endpoints
+##############################################################
+#  update a document
+#  put with no arguements to StreamsProdDB /v3/meta/StreamsProdDB/
+###
+PUT https://master.tapis.io/v3/meta/StreamsProdDB/Proj1/5e29ffe1a93eebf39fba93c4
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+###
+
+#  get a document from StreamsProdDB/Proj1/5e29ffe1a93eebf39fba93c4 /v3/meta/StreamsProdDB/Proj1
+###
+
+GET https://master.tapis.io/v3/meta/StreamsProdDB/Proj1/5e29ffe1a93eebf39fba93c4
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+###
+
+
+# /v3/meta/StreamsProdDB/Proj1/   meta
+#  delete with StreamsProdDB /v3/meta/StreamsProdDB/5e4bff5ea93eebf39fbecda1
+###
+
+
+DELETE https://master.tapis.io/v3/meta/StreamsProdDB/Proj1/tstLatIndex
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+###  result 204  er  no Content
+
+
+##############################################################
+#     Index endpoints
+##############################################################
+# get a list of indexes on collection
+###
+GET https://master.tapis.io/v3/meta/StreamsProdDB/wq_demo_tapis_proj12021-02-06T16:13:27.952306/_indexes
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+###
+
+# create an index on collection
+###
+PUT https://master.tapis.io/v3/meta/StreamsProdDB/wq_demo_tapis_proj12021-02-06T16:13:27.952306/_indexes/name1
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+{"keys": { "name": 1 } }
+
+###
+
+# delete an index on collection
+###
+DELETE https://master.tapis.io/v3/meta/StreamsProdDB/sltCollectionTst/_indexes/name1
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+###
+
+
+
+# meta
+#  delete with StreamsProdDB /v3/meta/StreamsProdDB/
+###
+DELETE https://master.tapis.io/v3/meta/StreamsProdDB/Proj1
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+###  result is a 409 without ETag
+
+
+
+
+
+#  post with no args to StreamsProdDB /v3/meta/StreamsProdDB/
+###
+POST https://master.tapis.io/v3/meta/StreamsProdDB/Proj1/5e29ffe1a93eebf39fba93c4
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+###
+
+
+#  delete with StreamsProdDB /v3/meta/StreamsProdDB/
+###
+DELETE https://master.tapis.io/v3/meta/StreamsProdDB/Proj1
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+###
+
+
+
+
+
+
+
+

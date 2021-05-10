@@ -19,8 +19,8 @@ GET http://localhost:8080/v3/meta/healthcheck
 ###  api:1
 GET http://localhost:8080/v3/meta/
 X-Tapis-Token: {{token}}
-X-Tapis-User: taccMetaAdmin
-X-Tapis-Tenant: master
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
 Content-Type: application/json
 
 ###   api:1

@@ -42,7 +42,7 @@ Content-Type: application/json
 
 #  HAPPY Path
 ###   db metadata
-GET https://dev.develop.tapis.io/v3/meta/MyTstDB/_meta
+GET https://dev.develop.tapis.io/v3/meta/MetaTstDB/_meta
 X-Tapis-Token: {{token}}
 X-Tapis-User:meta
 X-Tapis-Tenant:admin
@@ -209,7 +209,7 @@ Content-Type: application/json
 ###  result 201  er  Created
 
 # /v3/meta/MyTstDB/MyCollection   metaTACCAdmin
-#  post with no args and no request body to MyTstDB /v3/meta/MyTstDB/MyCollection
+#  post with basic query param and request body to MyTstDB /v3/meta/MyTstDB/MyCollection
 ###
 POST https://dev.develop.tapis.io/v3/meta/MyTstDB/MyCollection?basic=true
 X-Tapis-Token: {{token}}
