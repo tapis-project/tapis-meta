@@ -45,7 +45,7 @@ public class RuntimeParameters {
    *
    * @return the current environment variable setting
    */
-  public static boolean getLogSecurityInfo()
+  private static boolean getLogSecurityInfo()
   {
     // Always return the latest environment value.
     return TapisEnv.getLogSecurityInfo();
@@ -222,50 +222,48 @@ public class RuntimeParameters {
   }
   
   public String getSiteId() { return siteId; }
-  public void setSiteId(String siteId) { this.siteId = siteId; }
+  private void setSiteId(String siteId) { this.siteId = siteId; }
   
   public String getTenantBaseUrl() { return this.tenantBaseUrl; }
-  public void setTenantBaseUrl(String tenantBaseUrl) {
+  private void setTenantBaseUrl(String tenantBaseUrl) {
     this.tenantBaseUrl = tenantBaseUrl;
   }
   
   public String getSkSvcURL() { return skSvcURL; }
-  public void setSkSvcURL(String skSvcURL) {
+  private void setSkSvcURL(String skSvcURL) {
     this.skSvcURL = skSvcURL;
   }
   
   public String getTokenBaseUrl() { return tokenBaseUrl; }
-  public void setTokenBaseUrl(String tokenBaseUrl) { this.tokenBaseUrl = tokenBaseUrl; }
+  private void setTokenBaseUrl(String tokenBaseUrl) { this.tokenBaseUrl = tokenBaseUrl; }
   
-  public void setMetaToken(String metaToken) {
+  private void setMetaToken(String metaToken) {
     _log.debug("Token for testing : "+metaToken);
   }
   
   public String getLogDirectory() {
     return logDirectory;
   }
-  public void setLogDirectory(String logDirectory) {
+  private void setLogDirectory(String logDirectory) {
     this.logDirectory = logDirectory;
   }
   
   public String getLogFile() {
     return logFile;
   }
-  public void setLogFile(String logFile) {
+  private void setLogFile(String logFile) {
     this.logFile = logFile;
   }
   
-  public String getCoreServer() {
-    return coreServer;
-  }
-  public void setCoreServer(String coreServer) {
+  public String getCoreServer() { return coreServer; }
+  private void setCoreServer(String coreServer) {
     this.coreServer = coreServer;
   }
   
   public String getServicePassword() { return servicePassword; }
-  public void setServicePassword(String servicePassword) { this.servicePassword = servicePassword; }
+  private void setServicePassword(String servicePassword) { this.servicePassword = servicePassword; }
   
-  public void setServiceJWT(){
+  private void setServiceJWT(){
     _log.debug("calling setServiceJWT ...");
     ServiceJWTParms serviceJWTParms = new ServiceJWTParms();
     serviceJWTParms.setAccessTTL(43200); // 12 hrs

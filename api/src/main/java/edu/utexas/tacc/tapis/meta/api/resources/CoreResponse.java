@@ -138,6 +138,8 @@ public class CoreResponse {
     resp.status = String.valueOf(this.getStatusCode());
     resp.message = this.coreMsg;
     resp.version = TapisUtils.getTapisVersion();
+    // TODO handle duplicate document id submitted
+    // TODO com.google.gson.stream.MalformedJsonException: Expected value at line 1 column 8 path $._id
     resp.result = JsonParser.parseString("{\"_id\":" + documentId + "}").getAsJsonObject();
     return TapisGsonUtils.getGson().toJson(resp);
   }
