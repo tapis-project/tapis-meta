@@ -1,3 +1,9 @@
+
+###  sanity
+# curl -X GET http://c006.rodeo.tacc.utexas.edu:$debugport/
+GET http://c006.rodeo.tacc.utexas.edu:32263/StreamsStagingDB
+###
+
 ###
 
 # curl -X PUT http://c006.rodeo.tacc.utexas.edu:$debugport/$DB

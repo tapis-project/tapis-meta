@@ -1,0 +1,9 @@
+###  sanity
+# curl -X GET http://c006.rodeo.tacc.utexas.edu:$debugport/
+GET http://c006.rodeo.tacc.utexas.edu:31650/jplDB/neid/_size
+###
+# curl -X GET --location "http://c006.rodeo.tacc.utexas.edu:31650/jplDB/neid"
+GET http://c006.rodeo.tacc.utexas.edu:31650/jplDB/neid/_size
+
+###
+
