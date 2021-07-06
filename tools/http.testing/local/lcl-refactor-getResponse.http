@@ -13,6 +13,17 @@ Content-Type: application/json
 ###
 
 ##############################################################
+#      create a collection
+##############################################################
+###   debugging for basic response implementation
+PUT http://localhost:8080/v3/meta/MetaTstDB/slttestcollection
+X-Tapis-Token: {{token}}
+X-Tapis-User: meta
+X-Tapis-Tenant: admin
+Content-Type: application/json
+
+###
+##############################################################
 #      POST endpoints // createDocument, submitLargeAggregation
 ##############################################################
 # /v3/meta/StreamsDevDB/tstTmp

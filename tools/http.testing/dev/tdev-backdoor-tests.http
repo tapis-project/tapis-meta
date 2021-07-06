@@ -1,5 +1,7 @@
 ###  sanity test to see if service is alive
-GET http://c002.rodeo.tacc.utexas.edu:31404/
+# cic02.tacc.utexas.edu
+# http://c002.rodeo.tacc.utexas.edu:31404/
+GET http://c006.rodeo.tacc.utexas.edu:31404/
 # X-Tapis-Token: {{token}}
 # X-Tapis-User: streamsTACCAdmin
 # X-Tapis-Tenant: dev
@@ -22,7 +24,7 @@ Content-Type: application/json
 ##############################################################
 
 ###   db list collections
-GET http://c002.rodeo.tacc.utexas.edu:31404/StreamsDevDB
+GET http://c006.rodeo.tacc.utexas.edu:31404/StreamsDevDB
 X-Tapis-Token: {{token}}
 X-Tapis-User: streamsTACCAdmin
 X-Tapis-Tenant: dev
