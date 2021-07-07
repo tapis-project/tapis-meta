@@ -204,8 +204,28 @@ public class ResourceBucket {
     CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
     CoreResponse coreResponse = coreRequest.proxyPutRequest("{}");
   
+    /**
+     * status - String representing the HTTP response code, value will be success or error.
+     * message -  Service level message providing highlighted information beyond the status.
+     * version - Service version
+     * result - Result. As appropriate this may be
+     *    a single resource item from a query
+     *    a list of resource items from a query
+     *    the created resource item
+     *    a reference URL for the created resource item
+     *    the number of items processed by an action
+     *    empty
+     */
     // ---------------------------- Response -------------------------------
-    // just return whatever core server sends to us
+    // send a basic response on success or return what the server sends us
+    // what happened from core request?
+    
+    /*
+    if(coreResponse.getStatusCode() == 201){
+      String responseBody = this.returnBasicResponse(coreResponse,"SUCCESS Created "+collection);
+      return javax.ws.rs.core.Response.status(coreResponse.getStatusCode()).entity(responseBody).build();
+    }
+    */
     return javax.ws.rs.core.Response.status(coreResponse.getStatusCode()).entity(coreResponse.getCoreResponsebody()).build();
   }
   
@@ -756,6 +776,19 @@ public class ResourceBucket {
     }
     // return coreRequest.proxyPostRequest(jsonPayloadToProxy.toString());
   }
+  
+/*
+  protected String returnBasicResponse(CoreResponse coreResponse, String jsonMsg){
+    _log.debug("Message for basic response "+jsonMsg);
+    RespBasic resp = new RespBasic(jsonMsg);
+    resp.status = String.valueOf(coreResponse.getStatusCode());
+    resp.message = jsonMsg;
+    resp.version = TapisUtils.getTapisVersion();
+    return TapisGsonUtils.getGson().toJson(resp);
+  }
+*/
+
+  
   
 }
 
