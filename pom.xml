@@ -12,7 +12,7 @@
       <!-- Set empty relative path to avoid maven warning and-->
       <!--   ensure parent is found in local repository if that-->
       <!--   is the only place it exists.-->
-      <relativePath></relativePath>
+     <!-- <relativePath></relativePath>-->
     </parent>
 
     <artifactId>tapis-meta</artifactId>
@@ -49,6 +49,18 @@
         <updatePolicy>always</updatePolicy>
       </snapshots>
     </repository>
+      <repository>
+          <id>tapis-local-snapshots</id>
+          <name>Local repo for snapshots</name>
+          <url>http://c002.rodeo.tacc.utexas.edu:30044/repository/maven-snapshots</url>
+          <releases>  <enabled>false</enabled> </releases>
+          <snapshots> <enabled>true</enabled>  </snapshots>
+      </repository>
+      <repository>
+          <id>tapis-local-releases</id>
+          <name>Local repo for releases</name>
+          <url>http://c002.rodeo.tacc.utexas.edu:30044/repository/maven-releases</url>
+      </repository>
   </repositories>
 
   <build>

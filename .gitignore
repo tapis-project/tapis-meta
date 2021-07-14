@@ -90,6 +90,7 @@ Icon
 /edu.utexas.tacc.tapis.meta.config/
 /deployment/mongodb-latest/.docker/mongodb/data/db/
 /api/src/main/resources/java-client-metav3-openapi.yaml
+/api/src/main/resources/java-client-metav3-openapi.yaml
 /deployment/docker/mongodb/data/db/
 /deployment/.env
 /deployment/meta-core.yml
