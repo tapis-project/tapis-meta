@@ -6,6 +6,7 @@ import edu.utexas.tacc.tapis.shared.exceptions.runtime.TapisRuntimeException;
 import edu.utexas.tacc.tapis.shared.i18n.MsgUtils;
 import edu.utexas.tacc.tapis.shared.parameters.TapisEnv;
 import edu.utexas.tacc.tapis.shared.parameters.TapisInput;
+import edu.utexas.tacc.tapis.shared.security.ServiceClients;
 import edu.utexas.tacc.tapis.shared.security.ServiceJWT;
 import edu.utexas.tacc.tapis.shared.security.ServiceJWTParms;
 // import edu.utexas.tacc.tapis.shared.uuid.TapisUUID;
@@ -29,7 +30,9 @@ public class RuntimeParameters {
   
   // The site in which this service is running.
   private String  siteId;
-  
+  private String  siteAdminTenantId;
+  private ServiceClients serviceClients;
+
   // Globally unique id that identifies this JVM instance.
   // private static final TapisUUID id = new TapisUUID(UUIDType.METADATA);
   
@@ -223,7 +226,13 @@ public class RuntimeParameters {
   
   public String getSiteId() { return siteId; }
   private void setSiteId(String siteId) { this.siteId = siteId; }
-  
+
+  public String getSiteAdminTenantId() { return siteAdminTenantId; }
+  public void setSiteAdminTenantId(String siteAdminTenantId) { this.siteAdminTenantId = siteAdminTenantId; }
+
+  public ServiceClients getServiceClients() { return serviceClients; }
+  public void setServiceClients(ServiceClients serviceClients) { this.serviceClients = serviceClients; }
+
   public String getTenantBaseUrl() { return this.tenantBaseUrl; }
   private void setTenantBaseUrl(String tenantBaseUrl) {
     this.tenantBaseUrl = tenantBaseUrl;

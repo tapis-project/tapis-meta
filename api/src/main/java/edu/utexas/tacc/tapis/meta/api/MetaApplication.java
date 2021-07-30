@@ -3,6 +3,7 @@ package edu.utexas.tacc.tapis.meta.api;
 import edu.utexas.tacc.tapis.meta.config.RuntimeParameters;
 import edu.utexas.tacc.tapis.shared.TapisConstants;
 // import edu.utexas.tacc.tapis.shared.exceptions.TapisException;
+import edu.utexas.tacc.tapis.shared.security.ServiceClients;
 import edu.utexas.tacc.tapis.shared.security.ServiceContext;
 import edu.utexas.tacc.tapis.shared.security.TenantManager;
 import edu.utexas.tacc.tapis.sharedapi.jaxrs.filters.JWTValidateRequestFilter;
@@ -66,7 +67,7 @@ public class MetaApplication extends ResourceConfig {
       System.out.println(s);
     } else
       System.out.println("**** FAILURE TO INITIALIZE: tapis-metaapi TenantManager - No Tenants ****");
-  
+
     // ----- Service JWT Initialization
     ServiceContext serviceCxt = ServiceContext.getInstance();
     try {
@@ -88,8 +89,13 @@ public class MetaApplication extends ResourceConfig {
         System.out.println(s);
       }
     }
-  
-  
+
+    // Initialize site AdminTenantId and ServiceClients
+    String url = runTime.getTenantBaseUrl();
+    String siteAdminTenantId = TenantManager.getInstance(url).getSiteAdminTenantId(runTime.getSiteId());
+    runTime.setSiteAdminTenantId(siteAdminTenantId);
+    runTime.setServiceClients(ServiceClients.getInstance());
+
     // Dump the runTime.
     StringBuilder buf = new StringBuilder(2500); // capacity to avoid resizing
     buf.append("\n------- Starting  Meta Service ");
