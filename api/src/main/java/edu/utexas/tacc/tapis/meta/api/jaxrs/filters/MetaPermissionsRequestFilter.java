@@ -5,6 +5,9 @@ import edu.utexas.tacc.tapis.meta.config.RuntimeParameters;
 import edu.utexas.tacc.tapis.meta.utils.MetaAppConstants;
 import edu.utexas.tacc.tapis.meta.utils.MetaSKPermissionsMapper;
 import edu.utexas.tacc.tapis.security.client.SKClient;
+import edu.utexas.tacc.tapis.shared.TapisConstants;
+import edu.utexas.tacc.tapis.shared.exceptions.TapisException;
+import edu.utexas.tacc.tapis.shared.i18n.MsgUtils;
 import edu.utexas.tacc.tapis.shared.threadlocal.TapisThreadContext;
 import edu.utexas.tacc.tapis.shared.threadlocal.TapisThreadLocal;
 import org.slf4j.Logger;
@@ -19,6 +22,7 @@ import javax.ws.rs.core.Context;
 // import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
+import java.io.IOException;
 
 @Provider
 @Priority(MetaAppConstants.META_FILTER_PRIORITY_PERMISSIONS)
@@ -31,7 +35,8 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
   
   
   @Override
-  public void filter(ContainerRequestContext requestContext) {
+  public void filter(ContainerRequestContext requestContext) throws IOException
+  {
     // done 1. turn request into a permission spec.
     // done 2. utilize the SK client sdk to ask isPermitted
     // done 3. decide yes or no based on response
@@ -59,8 +64,21 @@ public class MetaPermissionsRequestFilter implements ContainerRequestFilter {
     RuntimeParameters runTime = RuntimeParameters.getInstance();
     
     //   Use Meta master token for call to SK
-    SKClient skClient = new SKClient(runTime.getSkSvcURL(), runTime.getSeviceToken());
-    
+//    SKClient skClient = new SKClient(runTime.getSkSvcURL(), runTime.getSeviceToken());
+    SKClient skClient;
+    String tenantName = runTime.getSiteAdminTenantId();
+    String userName = "meta";
+    try
+    {
+      skClient = runTime.getServiceClients().getClient(userName, tenantName, SKClient.class);
+    }
+    catch (Exception e)
+    {
+      String msg = MsgUtils.getMsg("TAPIS_CLIENT_NOT_FOUND", TapisConstants.SERVICE_NAME_SECURITY, tenantName, userName);
+      _log.error(msg, e);
+      throw new IOException(msg, e);
+    }
+
     //   map the request to permissions
     String permissionsSpec = mapRequestToPermissions(requestContext,threadContext.getJwtTenantId());
     
