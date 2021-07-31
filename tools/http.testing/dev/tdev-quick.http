@@ -9,7 +9,7 @@
 ##############################################################
 
 ###  sanity test to see if service is alive
-GET https://dev.develop.tapis.io/v3/meta/healthCheck
+GET https://dev.develop.tapis.io/v3/meta/healthcheck
 Content-Type: application/json
 ###
 

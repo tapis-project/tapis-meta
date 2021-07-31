@@ -4,7 +4,15 @@ GET http://c002.rodeo.tacc.utexas.edu:31650/
 # X-Tapis-User: streamsTACCAdmin
 # X-Tapis-Tenant: dev
 Content-Type: application/json
+###
 
+###  Anagha request for collection addition
+PUT http://c002.rodeo.tacc.utexas.edu:31650/StreamsProdDB/streams_metrics
+X-Tapis-Token: {{token}}
+# X-Tapis-Token: {{token}}
+# X-Tapis-User: streamsTACCAdmin
+# X-Tapis-Tenant: dev
+Content-Type: application/json
 ###
 
 

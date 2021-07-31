@@ -1,4 +1,11 @@
 ###  sanity test to see if service is alive
+### sanity check
+GET https://admin.prod.tapis.io/v3/meta/healthcheck
+# X-Tapis-Token: {{token}}
+# X-Tapis-User: meta
+# X-Tapis-Tenant: admin
+###
+
 # GET http://dev.develop.tapis.io/v3/meta/
 # X-Tapis-Token: {{token}}
 # X-Tapis-User: taccMetaAdmin
@@ -28,7 +35,7 @@
 ###
 PUT https://dev.develop.tapis.io/v3/meta/{{db}}/{{collection}}
 X-Tapis-Token: {{token}}
-X-Tapis-User: streams
+X-Tapis-User: meta
 X-Tapis-Tenant: master
 Content-Type: application/json
 

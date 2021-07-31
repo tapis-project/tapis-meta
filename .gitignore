@@ -94,3 +94,4 @@ Icon
 /deployment/docker/mongodb/data/db/
 /deployment/.env
 /deployment/meta-core.yml
+/tp-secrets.txt

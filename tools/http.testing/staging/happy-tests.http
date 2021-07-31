@@ -7,7 +7,7 @@ GET https://admin.staging.tapis.io/v3/meta/healthcheck
 
 #  get a default document list under StreamsStagingDB/Proj1 /v3/meta/StreamsStagingDB/Proj1
 ###
-GET https://admin.staging.tapis.io/v3/meta/StreamsStagingDB/testcoll
+GET https://admin.staging.tapis.io/v3/meta/StreamsStagingDB
 X-Tapis-Token: {{token}}
 X-Tapis-User: streams
 X-Tapis-Tenant: admin
