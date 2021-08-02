@@ -10,12 +10,20 @@ import edu.utexas.tacc.tapis.sharedapi.jaxrs.filters.JWTValidateRequestFilter;
 import edu.utexas.tacc.tapis.tenants.client.gen.model.Tenant;
 import io.swagger.v3.jaxrs2.integration.resources.AcceptHeaderOpenApiResource;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.server.NetworkListener;
+import org.glassfish.grizzly.nio.transport.TCPNIOTransport;
+import org.glassfish.grizzly.threadpool.ThreadPoolConfig;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.ApplicationPath;
+import java.net.URI;
+import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @ApplicationPath("/meta")
 public class MetaApplication extends ResourceConfig {
@@ -109,6 +117,15 @@ public class MetaApplication extends ResourceConfig {
   
     // Write the output information.
     System.out.println(buf.toString());
+  }
+
+  public static void main(String[] args) throws Exception {
+    final URI BASE_URI = URI.create("http://0.0.0.0:8080/");
+    MetaApplication config = new MetaApplication();
+
+    final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(BASE_URI, config, false);
+    server.start();
+
   }
 
 }
