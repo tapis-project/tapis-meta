@@ -66,6 +66,9 @@ Icon
 .Spotlight-V100
 .Trashes
 
+#pom backups
+pom.xml.versionsBackup
+
 #/.idea/
 /deployment/etc/
 /deployment/tapis-metaapi/meta/
