@@ -1,6 +1,6 @@
 ###  sanity
 # curl -X GET http://c006.rodeo.tacc.utexas.edu:$debugport/
-GET http://c006.rodeo.tacc.utexas.edu:31404/StreamsDevDB
+GET http://c002.rodeo.tacc.utexas.edu:31404/StreamsDevDB
 ###
 
 
