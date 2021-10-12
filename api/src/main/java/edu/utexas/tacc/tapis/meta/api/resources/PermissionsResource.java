@@ -1,7 +1,25 @@
 package edu.utexas.tacc.tapis.meta.api.resources;
 
 
-@Path("/permissions/")
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.UriInfo;
+
+@Path("/permissions")
 public class PermissionsResource {
 
     // Local logger.
@@ -30,12 +48,11 @@ public class PermissionsResource {
      *************************************************/
 
     //----------------  health check ----------------
-    @GET
-    @Path("/healthcheck")
+    @POST
+    @Path("/{dataBaseName}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @PermitAll
-    public Response healthCheck() {
-
+    public Response grantPermissions() {
+        return null;
     }
 }

@@ -11,7 +11,13 @@
     </parent>
 
     <artifactId>lib</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>tapis-shared-lib</artifactId>
+            <version>${tapis-shared-java.version}</version>
+        </dependency>
+    </dependencies>
 
     
 </project>
