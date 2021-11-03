@@ -1,0 +1,31 @@
+version: "3"
+
+volumes:
+  mongodata:
+
+services:
+  mongo:
+    image: mongo:3
+    hostname: "mongodb3"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=dev
+      - MONGO_INITDB_ROOT_PASSWORD=dev
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/data/db/
+
+  restheart:
+    image: jenkins2.tacc.utexas.edu:5000/tapis/tapis-meta-rh-core:4.1.6
+    restart: "always"
+    hostname: restheart
+    # command: 'java -Xms2G -Xmx2G -Dfile.encoding=UTF-8  -server -jar restheart.jar etc/restheart.yml --envFile etc/config.properties'
+    command: 'java -Dfile.encoding=UTF-8  -server -jar restheart.jar etc/restheart.yml --envFile etc/config.properties'
+    ports:
+      - 8081:8080
+    environment:
+#      - 'MONGO_URI=mongodb://tapisadmin:d3f%40ult@aloe-dev04.tacc.utexas.edu:27019/?authSource=admin'
+      - 'MONGO_URI=mongodb://dev:dev@mongodb3:27017/'
+#    volumes:
+#      - './etc/restheart.yml:/opt/restheart/etc/restheart.yml:ro'
+#      - './etc/config.properties:/opt/restheart/etc/config.properties:ro'
