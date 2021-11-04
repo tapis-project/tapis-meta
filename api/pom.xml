@@ -22,6 +22,8 @@
     <httpclient.version>4.5.6</httpclient.version>
     <!-- the last version to provide LocalTestServer.java -->
     <httpclient.test.version>4.3.6</httpclient.test.version>
+    <jersey-container.version>2.34</jersey-container.version>
+
   </properties>
 
   <dependencies>
@@ -38,10 +40,6 @@
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.jersey.containers</groupId>
-      <artifactId>jersey-container-servlet</artifactId>
     </dependency>
     <!--
         <dependency>
@@ -65,13 +63,19 @@
     <dependency>
       <groupId>org.glassfish.jersey.test-framework</groupId>
       <artifactId>jersey-test-framework-core</artifactId>
-      <version>2.32</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.test-framework.providers</groupId>
       <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
-      <version>2.32</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-grizzly2-http</artifactId>
     </dependency>
     <!-- Jersey/Jackson jax-rs modules -->
     <dependency>
@@ -80,7 +84,8 @@
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.containers</groupId>
-      <artifactId>jersey-container-grizzly2-http</artifactId>
+      <artifactId>jersey-container-grizzly2-servlet</artifactId>
+      <version>${jersey-container.version}</version>
     </dependency>
     <!-- Needed for JavaTimeModule in ObjectMapper -->
     <dependency>

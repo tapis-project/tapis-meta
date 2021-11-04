@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.security.PermitAll;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
+import org.glassfish.grizzly.http.server.Request;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.io.BufferedReader;
@@ -36,7 +36,7 @@ public class ResourceBucket {
   private ServletContext _servletContext;
   
   @Context
-  private HttpServletRequest _request;
+  private Request _request;
   
   /*************************************************
    *    Information unauthenticated endpoints
@@ -759,7 +759,7 @@ public class ResourceBucket {
     // Proxy the request and handle any exceptions
     CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
     // get the method to proxy
-    String httpMethod = _request.getMethod();
+    String httpMethod = _request.getMethod().toString();
     switch (httpMethod) {
       case HttpMethod.POST:      // createDocument, submitLargeAggregation
         _log.debug("getResponse POST");
