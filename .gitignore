@@ -1,5 +1,7 @@
 # Compiled class file
 *.class
+# env file
+meta.env
 
 # Generated files
 openapi.json
