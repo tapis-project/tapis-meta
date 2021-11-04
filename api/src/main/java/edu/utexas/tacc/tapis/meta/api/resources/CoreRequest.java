@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 
 /**
@@ -36,7 +37,8 @@ public class CoreRequest {
     // This gives us the valid Core server path URI by stripping the service
     // prefix from the beginning of the path
     String pathUri = _pathUri.replace(MetaAppConstants.META_REQUEST_PREFIX, "");
-    pathURL = RuntimeParameters.getInstance().getCoreServer()+ pathUri;
+//    pathURL = RuntimeParameters.getInstance().getCoreServer() + pathUri;
+    pathURL = Paths.get(RuntimeParameters.getInstance().getCoreServer(), pathUri).toString();
   
     _log.info("constructed with path URL : "+pathURL);
   }
