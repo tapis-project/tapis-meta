@@ -2,7 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.0 - 2021-07-16
+Please find documentation here:
+https://tapis.readthedocs.io/en/latest/technical/meta.html
+
+You may also reference live-docs based on the openapi specification here:
+https://tapis-project.github.io/live-docs
+
+## 1.1.0 - 2022-01-10
+
+Minor Release
+
+### Breaking Changes:
+- None.
+
+### New features:
+- Added ITestEndpoints program to test the Meta APIs
+- Added Docker Compose file for local test environment
+
+### Bug fixes:
+- None.
+
+## 1.0.0 - 2021-09-03
 
 Initial release supporting basic CRUD operations on Tapis Meta resources.
 
