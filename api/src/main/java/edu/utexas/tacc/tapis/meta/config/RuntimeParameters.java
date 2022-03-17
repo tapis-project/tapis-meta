@@ -1,10 +1,12 @@
 package edu.utexas.tacc.tapis.meta.config;
 
 import edu.utexas.tacc.tapis.client.shared.exceptions.TapisClientException;
+import edu.utexas.tacc.tapis.shared.TapisConstants;
 import edu.utexas.tacc.tapis.shared.exceptions.TapisException;
 import edu.utexas.tacc.tapis.shared.exceptions.runtime.TapisRuntimeException;
 import edu.utexas.tacc.tapis.shared.i18n.MsgUtils;
 import edu.utexas.tacc.tapis.shared.parameters.TapisEnv;
+import edu.utexas.tacc.tapis.shared.parameters.TapisEnv.EnvVar;
 import edu.utexas.tacc.tapis.shared.parameters.TapisInput;
 import edu.utexas.tacc.tapis.shared.security.ServiceClients;
 import edu.utexas.tacc.tapis.shared.security.ServiceJWT;
@@ -18,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import java.text.NumberFormat;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Properties;
 
 public class RuntimeParameters {
@@ -85,41 +88,136 @@ public class RuntimeParameters {
       _log.error(msg, e);
       throw new TapisRuntimeException(msg, e);
     }
-  
+    
     // The site must always be provided.
-    String parm = System.getenv("tapis.site.id");
-    if (StringUtils.isBlank(parm)) {
-      String msg = MsgUtils.getMsg("TAPIS_SERVICE_PARM_INITIALIZATION_FAILED",
-          RuntimeParameters.SERVICE_NAME_META,
-          "siteId",
-          "No siteId specified.");
-      _log.error(msg);
-      throw new TapisRuntimeException(msg);
-    }
+    String parm = inputProperties.getProperty(EnvVar.TAPIS_SITE_ID.getEnvName());
+    _log.debug("TAPIS_SITE_ID: " + parm);
+	if (StringUtils.isBlank(parm)) {
+		parm = System.getenv(EnvVar.TAPIS_SITE_ID.name());
+		//parm = System.getenv("tapis.site.id"); //envVar.name()
+		if(StringUtils.isBlank(parm)) {
+			String msg = MsgUtils.getMsg("TAPIS_SERVICE_PARM_INITIALIZATION_FAILED",
+	            TapisConstants.SERVICE_NAME_META,
+	            "siteId",
+	            "No siteId specified.");
+	    _log.error(msg);
+	     throw new TapisRuntimeException(msg);
+	    }
+	}
+
     setSiteId(parm);
   
     //----------------------   Input parameters   ----------------------
     // String parm = inputProperties.getProperty(TapisEnv.EnvVar.TAPIS_LOG_DIRECTORY.getEnvName());
     parm = System.getenv("tapis.meta.core.server");
-    if (!StringUtils.isBlank(parm)) setCoreServer(parm);
+    
+    if (StringUtils.isBlank(parm)) {
+    	 parm = System.getenv("TAPIS_META_CORE_SERVER");
+    	 if(StringUtils.isBlank(parm)) {
+ 			String msg = MsgUtils.getMsg("TAPIS_SERVICE_PARM_INITIALIZATION_FAILED",
+ 	            TapisConstants.SERVICE_NAME_META,
+ 	            "metaCoreServer",
+ 	            "No meta core server is specified.");
+ 	    _log.error(msg);
+ 	     throw new TapisRuntimeException(msg);
+ 	    }
+    }
+    	
+    setCoreServer(parm);  	
   
     parm = inputProperties.getProperty("tapis.meta.log.directory");
-    if (!StringUtils.isBlank(parm)) setLogDirectory(parm);
+    if (StringUtils.isBlank(parm)) {
+   	 parm = System.getenv("TAPIS_META_LOG_DIRECTORY");
+   	 if(StringUtils.isBlank(parm)) {
+			String msg = MsgUtils.getMsg("TAPIS_SERVICE_PARM_INITIALIZATION_FAILED",
+	            TapisConstants.SERVICE_NAME_META,
+	            "metaLogDirectory",
+	            "No meta log directory is specified.");
+	    _log.warn(msg);
+	     //throw new TapisRuntimeException(msg);
+	    }
+   }
+   if (!StringUtils.isBlank(parm)) setLogDirectory(parm);
   
     parm = inputProperties.getProperty("tapis.meta.log.file");
+    if (StringUtils.isBlank(parm)) {
+      	 parm = System.getenv("TAPIS_META_LOG_FILE");
+      	 if(StringUtils.isBlank(parm)) {
+   			String msg = MsgUtils.getMsg("TAPIS_SERVICE_PARM_INITIALIZATION_FAILED",
+   	            TapisConstants.SERVICE_NAME_META,
+   	            "metaLogFile",
+   	            "No meta log file is specified.");
+   	    _log.warn(msg);
+   	     //throw new TapisRuntimeException(msg);
+   	    }
+      }
     if (!StringUtils.isBlank(parm)) setLogFile(parm);
-  
-    parm = inputProperties.getProperty("tapis.meta.service.token");
+    
+    /*
+     * Commented on Mar 17 2022 - Needs to do the clean up once  we are sure no dependencies on the sectionn of the code.
+     * 
+     * parm = inputProperties.getProperty("tapis.meta.service.token");
+    if (StringUtils.isBlank(parm)) {
+     	 parm = System.getenv("TAPIS_META_SERVICE_TOKEN");
+     	 if(StringUtils.isBlank(parm)) {
+  			String msg = MsgUtils.getMsg("TAPIS_SERVICE_PARM_INITIALIZATION_FAILED",
+  	            TapisConstants.SERVICE_NAME_META,
+  	            "metaServiceToken",
+  	            "No meta service token specified.");
+  	     _log.warn(msg);
+  	     //throw new TapisRuntimeException(msg);
+  	    }
+     }
+   
     if (!StringUtils.isBlank(parm)) setMetaToken(parm);
+     end of commented section Mar 17 2022 *****/
   
     parm = System.getenv("tapis.meta.service.tenantBaseUrl");
+    if (StringUtils.isBlank(parm)) {
+    	 parm = System.getenv("TAPIS_META_SERVICE_TENANT_BASE_URL");
+    	 if(StringUtils.isBlank(parm)) {
+ 			String msg = MsgUtils.getMsg("TAPIS_SERVICE_PARM_INITIALIZATION_FAILED",
+ 	            TapisConstants.SERVICE_NAME_META,
+ 	            "meta ServiceTenantBaseUrl",
+ 	            "No meta service tenant base URL is specified.");
+ 	     _log.error(msg);
+ 	     throw new TapisRuntimeException(msg);
+ 	    }
+    }
+    
     if (!StringUtils.isBlank(parm)) setTenantBaseUrl(parm);
-  
+    
+    
     parm = System.getenv("tapis.meta.service.skSvcURL");
+    if (StringUtils.isBlank(parm)) {
+   	 parm = System.getenv("TAPIS_META_SERVICE_SK_SVC_URL");
+   	 if(StringUtils.isBlank(parm)) {
+			String msg = MsgUtils.getMsg("TAPIS_SERVICE_PARM_INITIALIZATION_FAILED",
+	            TapisConstants.SERVICE_NAME_META,
+	            "meta ServiceSkSvcUrl",
+	            "No meta service sk svc URL is specified.");
+	     _log.error(msg);
+	     throw new TapisRuntimeException(msg);
+	    }
+   }
+    
     if (!StringUtils.isBlank(parm)) setSkSvcURL(parm);
   
+    
     parm = System.getenv("tapis.meta.service.tokenBaseUrl");
+    if (StringUtils.isBlank(parm)) {
+   	 parm = System.getenv("TAPIS_META_SERVICE_TOKEN_BASE_URL");
+   	 if(StringUtils.isBlank(parm)) {
+			String msg = MsgUtils.getMsg("TAPIS_SERVICE_PARM_INITIALIZATION_FAILED",
+	            TapisConstants.SERVICE_NAME_META,
+	            "meta ServiceTokenBaseUrl",
+	            "No meta service token base URL is specified.");
+	     _log.error(msg);
+	     throw new TapisRuntimeException(msg);
+	    }
+   }
     if (!StringUtils.isBlank(parm)) setTokenBaseUrl(parm);
+    
     
     parm = System.getenv("TAPIS_SERVICE_PASSWORD");
     if (!StringUtils.isBlank(parm)) setServicePassword(parm);
@@ -296,4 +394,6 @@ public class RuntimeParameters {
     }
     return serviceJWT.getAccessJWT(siteId);
   }
+  
+
 }
