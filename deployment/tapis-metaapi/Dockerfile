@@ -12,7 +12,8 @@
 #
 #   Tested with Docker version 18.06.0-ce
 ##########################################################################
-FROM tomcat:9.0.41-jdk15-openjdk-oracle
+#FROM tomcat:9.0.41-jdk15-openjdk-oracle
+FROM tomcat:9.0.58-jdk17-openjdk-bullseye
 
 ARG VER
 ARG GIT_COMMIT
@@ -20,8 +21,11 @@ ARG BUILD_DATE
 
 MAINTAINER CIC Support <cicsupport@tacc.utexas.edu>
 
+#RUN apt-get update
+#RUN apt-get install -y yum
+
 # add nano for logback edits
-RUN yum -y install nano
+#RUN yum -y install nano
 
 # add
 COPY meta /usr/local/tomcat/webapps/v3/
@@ -31,7 +35,7 @@ COPY logback.xml /usr/local/tomcat/etc/
 ENV CATALINA_HOME /usr/local/tomcat
 
 # Set most Java options here.
-ENV CATALINA_OPTS -Xms8g -Xmx16g -Dlogback.configurationFile=/usr/local/tomcat/etc/logback.xml
+ENV CATALINA_OPTS -Xms8g -Xmx16g -Dlogback.configurationFile=/usr/local/tomcat/etc/logback.xml --add-opens java.base/java.time=ALL-UNNAMED
 
 # Debug port and http port
 EXPOSE 8000
