@@ -8,6 +8,19 @@ https://tapis.readthedocs.io/en/latest/technical/meta.html
 You may also reference live-docs based on the openapi specification here:
 https://tapis-project.github.io/live-docs
 
+## 1.1.1 - 2022-03-18
+
+Point release for migration to java 17
+
+### Breaking Changes:
+- Environment variables changed from lowercase with dot structure to uppercase with underscores i.e. tapis.meta.core.server to TAPIS_META_CORE_SERVER
+
+### New features:
+- None.
+
+### Bug fixes: 
+- None.
+
 ## 1.1.0 - 2022-01-10
 
 Minor Release

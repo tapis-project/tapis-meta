@@ -119,7 +119,7 @@ public class RuntimeParameters {
  	            "metaCoreServer",
  	            "No meta core server is specified.");
  	    _log.error(msg);
- 	     //throw new TapisRuntimeException(msg);
+ 	     throw new TapisRuntimeException(msg);
  	    }
     }
     	
