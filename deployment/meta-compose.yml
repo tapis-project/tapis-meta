@@ -15,7 +15,7 @@ volumes:
 
 services:
    meta-security:
-      image: tapis/metaapi:dev-java17
+      image: tapis/metaapi:dev
       container_name: meta-tapis-security
       environment:
          - 'TAPIS_SITE_ID=tacc'
