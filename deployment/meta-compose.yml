@@ -18,30 +18,33 @@ services:
       image: tapis/metaapi:dev
       container_name: meta-tapis-security
       environment:
-         - 'tapis.site.id=tacc'
-         - 'tapis.meta.service.tenantBaseUrl=https://dev.develop.tapis.io/'
-         - 'tapis.meta.service.skSvcURL=https://dev.develop.tapis.io/v3'
-         - 'tapis.meta.service.tokenBaseUrl=https://dev.develop.tapis.io/'
-         - 'TAPIS_SERVICE_PASSWORD=GZ9A9CGaTJ5MNr89BAvw2Aazw'
-      depends_on:
-         - restheart
+         - 'TAPIS_SITE_ID=tacc'
+         - 'TAPIS_META_SERVICE_TENANT_BASE_URL=https://dev.develop.tapis.io/'
+         - 'TAPIS_META_SERVICE_SK_SVC_URL=https://dev.develop.tapis.io/v3'
+         - 'TAPIS_META_SERVICE_TOKEN_BASE_URL=https://dev.develop.tapis.io/'
+         - 'TAPIS_SERVICE_PASSWORD=6SQX9B2DryFotBJoK8sRGAw'
+         - 'TAPIS_META_CORE_SERVER=http://localhost:8081/'
+         - 'TAPIS_REQUEST_LOGGING_FILTER_PREFIXES=/v3/meta'
+         - 'TAPIS_TENANT_SVC_BASE_URL=https://admin.develop/tapis.io'
+#      depends_on:
+#         - restheart
 #      networks:
 #         - backend
       ports:
          - "18080:8080"
 
-   restheart:
-      image: tapis/tapis-meta-rh-server:dev
-      container_name: meta-restheart
-      depends_on:
-         - mongodb
+#   restheart:
+#      image: tapis/tapis-meta-rh-server:dev
+#      container_name: meta-restheart
+#      depends_on:
+#         - mongodb
 #      networks:
 #         - backend
-      ports:
-         - "8080:8080"
-      volumes:
-         - './etc/restheart.yml:/opt/restheart/etc/restheart.yml:ro'
-         - './etc/config.properties:/opt/restheart/etc/config.properties:ro'
+#      ports:
+#         - "8080:8080"
+#      volumes:
+#         - './etc/restheart.yml:/opt/restheart/etc/restheart.yml:ro'
+#         - './etc/config.properties:/opt/restheart/etc/config.properties:ro'
 
 # restheart:
 #    image: jenkins2.tacc.utexas.edu:5000/tapis/tapis-meta-rh-core:4.1.6
@@ -82,14 +85,14 @@ services:
 #       ports:
 #          - "27017:27017"
 
-   mongodb:
-       image: mongo:4.2
-       container_name: restheart-mongo
-       command: --bind_ip_all
-       volumes:
-          - restheart-security-testdb:/data/db
+#   mongodb:
+#       image: mongo:4.2
+#       container_name: restheart-mongo
+#       command: --bind_ip_all
+#       volumes:
+#          - restheart-security-testdb:/data/db
 #       networks:
 #          - backend
-       ### mongodb port must be mapped for the test to run
-       ports:
-          - "27017:27017"
+#       ### mongodb port must be mapped for the test to run
+#       ports:
+#          - "27017:27017"

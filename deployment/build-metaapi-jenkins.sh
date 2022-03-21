@@ -3,7 +3,7 @@ source ~/.bash_profile
 
 SVC_NAME=meta
 
-sdk use java 15.0.1-open
+sdk use java 17.0.2-open
 sdk use maven 3.6.3
 
 java -version
@@ -37,8 +37,6 @@ if [ "$Publish" == "true" ]; then
 	docker push tapis/metaapi:dev
 	docker tag tapis/metaapi:dev tapis/metaapi:dev-${TAPIS_VERSION}
 	docker push tapis/metaapi:dev-${TAPIS_VERSION}
-    docker tag tapis/metaapi:dev jenkins2.tacc.utexas.edu:5000/tapis/metaapi:dev-${GIT_COMMIT}
-	docker push jenkins2.tacc.utexas.edu:5000/tapis/metaapi:dev-${GIT_COMMIT}
 
   cd $WORKSPACE
  fi
@@ -49,5 +47,5 @@ if [ "$Deploy" == "true" ]; then
   echo "************************ Deploying Service: $SVC_NAME"
   # SSH to cic02 as the tapisdev account with access to the tapisdev k8s namespace -
   # delete pod to make it automatically pull the latest.
-  ssh -i /home/jenkins/.ssh/Jenkins-2018 tapisdev@cic02 "cd ~/tapis-deploy/${SVC_NAME}/api; ./burndown; ./burnup; ./kmeta-env"
+  ssh -i /home/jenkins/.ssh/Jenkins-2018 tapisdev@cic02 'cd ~/tapis-kube/meta/api; ./burndown; ./burnup'
 fi

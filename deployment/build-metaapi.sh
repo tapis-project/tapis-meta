@@ -110,10 +110,11 @@ echo "***      IMAGE_NAME  ${IMAGE_NAME}"
 echo "***      VERBOSE_IMAGE_NAME should look like tapis/${SRVC}api:${TAPIS_ENV}-${VER}-${GIT_COMMIT}-${BUILD_DATE}"
 echo "***      VERBOSE_IMAGE_NAME ${VERBOSE_IMAGE_NAME}"
 echo ""
-echo "***      Push to docker hub : docker push ${IMAGE_NAME}"
-               docker push "$IMAGE_NAME"
-echo ""
-echo "***      Tag and Push to private registry : docker push jenkins2.tacc.utexas.edu:5000/${VERBOSE_IMAGE_NAME}"
-                docker tag ${IMAGE_NAME} jenkins2.tacc.utexas.edu:5000/${VERBOSE_IMAGE_NAME}
-                docker push jenkins2.tacc.utexas.edu:5000/${VERBOSE_IMAGE_NAME}
+
+#echo "***      Push to docker hub : docker push ${IMAGE_NAME}"
+#               docker push "$IMAGE_NAME"
+#echo ""
+#echo "***      Tag and Push to private registry : docker push jenkins2.tacc.utexas.edu:5000/${VERBOSE_IMAGE_NAME}"
+#                docker tag ${IMAGE_NAME} jenkins2.tacc.utexas.edu:5000/${VERBOSE_IMAGE_NAME}
+#                docker push jenkins2.tacc.utexas.edu:5000/${VERBOSE_IMAGE_NAME}
 
