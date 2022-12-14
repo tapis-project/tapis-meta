@@ -909,11 +909,7 @@ paths:
           required: true
           schema:
             type: string
-        - name: aggregation
-          in: path
-          required: true
-          schema:
-            type: string
+     
       requestBody:
         description: "the aggregation being defined for the collection"
         content:

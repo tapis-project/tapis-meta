@@ -49,7 +49,7 @@ public class ResourceBucket {
   @Produces(MediaType.APPLICATION_JSON)
   @PermitAll
   public javax.ws.rs.core.Response healthCheck() {
-    // Trace this request.
+	 // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
           "healthcheck", _request.getRequestURL());
@@ -626,12 +626,11 @@ public class ResourceBucket {
   
   // ----------------  Put an aggregation ----------------
   @PUT
-  @Path("/{db}/{collection}/_aggr/{aggregation}")
+  @Path("/{db}/{collection}/_aggrs")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public javax.ws.rs.core.Response addAggregation(@PathParam("db") String db,
                                                    @PathParam("collection") String collection,
-                                                   @PathParam("aggregation") String aggregation,
                                                    InputStream payload) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
@@ -690,12 +689,13 @@ public class ResourceBucket {
                                                           @QueryParam("page") String page,
                                                           @QueryParam("pagesize") String pagesize,
                                                           InputStream payload) {
+	  
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
-          "addAggregation", _request.getRequestURL());
+          "submitLargeAggregation", _request.getRequestURL());
       _log.trace(msg);
-      _log.trace("Add an aggregation in " + db + "/" + collection);
+      _log.trace("submit an aggregation in " + db + "/" + collection + "/" + aggregation);
     }
     // we want to capture the oversize avars parameter in a request body
     // to use as a submission to RH core server in a GET.
@@ -705,7 +705,7 @@ public class ResourceBucket {
     // we will assign the payload to an avars Query parameter to RH core server.
     jsonPayloadToProxy.append("?avars=");
   
-    CoreResponse coreResponse = this.getResponse(payload,jsonPayloadToProxy);
+    CoreResponse coreResponse = this.getPostResponse(payload,jsonPayloadToProxy);
     
     //---------------------------- Response -------------------------------
     // just return whatever core server sends to us
@@ -755,28 +755,66 @@ public class ResourceBucket {
     }
   
     _log.debug("Data Received: " + jsonPayloadToProxy.toString());
-  
-    // Proxy the request and handle any exceptions
-    CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
-    // get the method to proxy
+    
+ // get the method to proxy
     String httpMethod = _request.getMethod();
+    String _pathUri = _request.getRequestURI();
+    CoreRequest coreRequest;
+      
     switch (httpMethod) {
-      case HttpMethod.POST:      // createDocument, submitLargeAggregation
+      case HttpMethod.POST:      // createDocument
         _log.debug("getResponse POST");
+        
+        // Proxy the request and handle any exceptions
+        coreRequest = new CoreRequest(_pathUri);
         return coreRequest.proxyPostRequest(jsonPayloadToProxy.toString());
+      
       case HttpMethod.PUT:       // createIndex, replaceDocument, addAggregation
-        _log.debug("getResponse PUT");
+        _log.debug("getResponse PUT:pathURI " + "_pathUri" );
+        String pathUri = _pathUri.replace("/_aggrs","");
+        // Proxy the request and handle any exceptions
+        coreRequest = new CoreRequest(pathUri);
         return coreRequest.proxyPutRequest(jsonPayloadToProxy.toString());
       case  HttpMethod.PATCH:    // modifyDocument
         _log.debug("getResponse PATCH");
+        
+        // Proxy the request and handle any exceptions
+        coreRequest = new CoreRequest(_pathUri);
         return coreRequest.proxyPatchRequest(jsonPayloadToProxy.toString());
       default:
         // TODO return null here if there is an invalid httpmethod.
         throw new IllegalArgumentException("Invalid http method: " + httpMethod);
     }
-    // return coreRequest.proxyPostRequest(jsonPayloadToProxy.toString());
+    
   }
   
+  private CoreResponse getPostResponse(InputStream payload, StringBuilder jsonPayloadToProxy){
+	    _log.debug("In ResourceBucket getPostReponse helper method");
+	    try {
+	      BufferedReader in = new BufferedReader(new InputStreamReader(payload));
+	      String line;
+	      while ((line = in.readLine()) != null) {
+	        jsonPayloadToProxy.append(line);
+	      }
+	    } catch (Exception e) {
+	      // TODO expanded message
+	      _log.debug("Error Parsing: - ");
+	    }
+	  
+	    _log.debug("Data Received: " + jsonPayloadToProxy.toString());
+	    
+	    String inComingRequest = _request.getRequestURI();
+	    StringBuilder newUriPath = new StringBuilder(); //  /meta/v3/v1airr/rearrangement/_aggrs/facets
+	    newUriPath.append(inComingRequest)
+	              .append(jsonPayloadToProxy.toString());
+	  
+	    // Proxy the request and handle any exceptions
+	    CoreRequest coreRequest = new CoreRequest( newUriPath.toString());
+	    // get the method to proxy
+	    String httpMethod = _request.getMethod();
+	    return coreRequest.proxyGetRequest();
+	
+	  }
 /*
   protected String returnBasicResponse(CoreResponse coreResponse, String jsonMsg){
     _log.debug("Message for basic response "+jsonMsg);
