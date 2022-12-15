@@ -8,6 +8,16 @@ https://tapis.readthedocs.io/en/latest/technical/meta.html
 You may also reference live-docs based on the openapi specification here:
 https://tapis-project.github.io/live-docs
 
+## 1.2.1 - 2022-12-15
+
+### Bug Fixes:
+- Fixed POST method not allowed error in the submitLargeAggregation end-point
+- Fixed the PUT URL for Restheart for addAggregation 
+- Removed aggregation from path required parameter which was not required for RestHeart call and therefore failing.
+
+## 1.2.0 - 2022-06-03
+Bumped the Release version 
+
 ## 1.1.1 - 2022-03-18
 
 Point release for migration to java 17
