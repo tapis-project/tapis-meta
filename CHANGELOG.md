@@ -8,6 +8,10 @@ https://tapis.readthedocs.io/en/latest/technical/meta.html
 You may also reference live-docs based on the openapi specification here:
 https://tapis-project.github.io/live-docs
 
+## 1.4.0 - 2023-07-17
+Increased the release version
+
+
 ## 1.3.0 - 2023-02-28
 Increased the release version
 
