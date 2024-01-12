@@ -569,6 +569,33 @@ public class ResourceBucket {
     return javax.ws.rs.core.Response.status(coreResponse.getStatusCode()).entity(coreResponse.getCoreResponsebody()).build();
   }
   
+  // ----------------  Put documents ----------------
+  // Bulk update
+  // replace the documents provided in a json array
+  @PUT
+  @Path("/{db}/{collection}/bulkupdate")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public javax.ws.rs.core.Response replaceBulkDocuments(@PathParam("db") String db,
+                                                 @PathParam("collection") String collection,
+                                                 InputStream payload) {
+    // Trace this request.
+    if (_log.isTraceEnabled()) {
+      String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
+          "bulkupdate", _request.getRequestURL());
+      _log.trace(msg);
+      _log.trace("Put a list of documents in " + db +"/"+ collection);
+    }
+  
+    // Get the json payload to proxy to back end
+    StringBuilder jsonPayloadToProxy = new StringBuilder();
+    CoreResponse coreResponse = this.getResponse(payload, jsonPayloadToProxy);
+    
+    //---------------------------- Response -------------------------------
+    // just return whatever core server sends to us
+    return javax.ws.rs.core.Response.status(coreResponse.getStatusCode()).entity(coreResponse.getCoreResponsebody()).build();
+  }
+  
   // ----------------  Patch a document ----------------
   @PATCH
   @Path("/{db}/{collection}/{documentId}")
@@ -769,12 +796,13 @@ public class ResourceBucket {
         coreRequest = new CoreRequest(_pathUri);
         return coreRequest.proxyPostRequest(jsonPayloadToProxy.toString());
       
-      case HttpMethod.PUT:       // createIndex, replaceDocument, addAggregation
+      case HttpMethod.PUT:       // createIndex, replaceDocument, replaceBulkDocuments, addAggregation
         _log.debug("getResponse PUT:pathURI " + "_pathUri" );
         String pathUri = _pathUri.replace("/_aggrs","");
         // Proxy the request and handle any exceptions
         coreRequest = new CoreRequest(pathUri);
         return coreRequest.proxyPutRequest(jsonPayloadToProxy.toString());
+      
       case  HttpMethod.PATCH:    // modifyDocument
         _log.debug("getResponse PATCH");
         
