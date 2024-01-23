@@ -248,6 +248,8 @@ public class ResourceBucket {
 
     if(!StringUtils.isEmpty(_request.getQueryString())){
       pathUrl.append("?").append(_request.getQueryString());
+      _log.info("filter" + filter);
+      _log.info("pathUrl.toString(): " + pathUrl.toString());
     }
     
     // Proxy the GET request and handle any exceptions
@@ -568,34 +570,7 @@ public class ResourceBucket {
     // just return whatever core server sends to us
     return javax.ws.rs.core.Response.status(coreResponse.getStatusCode()).entity(coreResponse.getCoreResponsebody()).build();
   }
-  
-  // ----------------  Put documents ----------------
-  // Bulk update
-  // replace the documents provided in a json array
-  @PUT
-  @Path("/{db}/{collection}/bulkupdate")
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public javax.ws.rs.core.Response replaceBulkDocuments(@PathParam("db") String db,
-                                                 @PathParam("collection") String collection,
-                                                 InputStream payload) {
-    // Trace this request.
-    if (_log.isTraceEnabled()) {
-      String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
-          "bulkupdate", _request.getRequestURL());
-      _log.trace(msg);
-      _log.trace("Put a list of documents in " + db +"/"+ collection);
-    }
-  
-    // Get the json payload to proxy to back end
-    StringBuilder jsonPayloadToProxy = new StringBuilder();
-    CoreResponse coreResponse = this.getResponse(payload, jsonPayloadToProxy);
-    
-    //---------------------------- Response -------------------------------
-    // just return whatever core server sends to us
-    return javax.ws.rs.core.Response.status(coreResponse.getStatusCode()).entity(coreResponse.getCoreResponsebody()).build();
-  }
-  
+
   // ----------------  Patch a document ----------------
   @PATCH
   @Path("/{db}/{collection}/{documentId}")
@@ -782,6 +757,7 @@ public class ResourceBucket {
     }
   
     _log.debug("Data Received: " + jsonPayloadToProxy.toString());
+    _log.info("Data Received: " + jsonPayloadToProxy.toString());
     
  // get the method to proxy
     String httpMethod = _request.getMethod();
