@@ -31,6 +31,11 @@ MAINTAINER CIC Support <cicsupport@tacc.utexas.edu>
 COPY meta /usr/local/tomcat/webapps/v3/
 COPY logback.xml /usr/local/tomcat/etc/
 
+# Change to non-root user after installation is complete.
+# Create a private work directory subsequent commands.
+USER tapis
+WORKDIR /home/tapis/work
+
 # Set environment and turn on remote debug
 ENV CATALINA_HOME /usr/local/tomcat
 
