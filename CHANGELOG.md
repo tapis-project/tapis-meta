@@ -8,6 +8,12 @@ https://tapis.readthedocs.io/en/latest/technical/meta.html
 You may also reference live-docs based on the openapi specification here:
 https://tapis-project.github.io/live-docs
 
+## 1.6.1 - 2024-05-19
+
+### New Features:
+1. Update maven repository reference.
+2. Define non-root image in Dockerfile.
+
 ## 1.6.0 - 2024-01-24
 Increased the release version
 
