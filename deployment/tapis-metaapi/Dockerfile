@@ -23,6 +23,7 @@ MAINTAINER CIC Support <cicsupport@tacc.utexas.edu>
 
 #RUN apt-get update
 #RUN apt-get install -y yum
+RUN apt update && apt install -y less vim-tiny && useradd -m tapis
 
 # add nano for logback edits
 #RUN yum -y install nano
