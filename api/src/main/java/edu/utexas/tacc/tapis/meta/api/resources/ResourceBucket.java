@@ -419,7 +419,7 @@ public class ResourceBucket {
       _log.error("Error Parsing: - ");
     }
     
-    _log.debug("Data Received: " + jsonPayloadToProxy.toString());
+    _log.info("Data Received: " + jsonPayloadToProxy.toString());
     
     // we change here from a POST request to a GET request.
     // RH core will except URL GET filter request without the URL limitation.
@@ -430,8 +430,9 @@ public class ResourceBucket {
         "&" +
         _request.getQueryString() +
         "&sort={}";//  /meta/v3/v1airr/rearrangement/_filter
+    _log.info(" Large Query New URI Path: " + newUriPath);
     CoreRequest coreRequest = new CoreRequest(newUriPath);
-    CoreResponse coreResponse = coreRequest.proxyPostRequest(jsonPayloadToProxy.toString());
+    CoreResponse coreResponse = coreRequest.proxyGetRequest();
     
     String result;
     result = coreResponse.getCoreResponsebody();
