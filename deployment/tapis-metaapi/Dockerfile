@@ -13,7 +13,8 @@
 #   Tested with Docker version 18.06.0-ce
 ##########################################################################
 #FROM tomcat:9.0.41-jdk15-openjdk-oracle
-FROM tomcat:9.0.58-jdk17-openjdk-bullseye
+#FROM tomcat:9.0.58-jdk17-openjdk-bullseye
+FROM tomcat:9.0.97-jdk21-temurin-noble
 
 ARG VER
 ARG GIT_COMMIT
