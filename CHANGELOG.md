@@ -7,6 +7,15 @@ https://tapis.readthedocs.io/en/latest/technical/meta.html
 
 You may also reference live-docs based on the openapi specification here:
 https://tapis-project.github.io/live-docs
+## 1.8.2 - 2025-03-25
+
+### New Features:
+1. Updated the Dockerfile to update Tomcat image version
+   
+## 1.8.1 - 2025-02-07
+
+### New Features:
+1. Service has been updated  with Java 21
 
 ## 1.8.0 - 2024-12-04
 Increased the release version
