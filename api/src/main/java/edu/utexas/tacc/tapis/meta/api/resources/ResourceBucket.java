@@ -1,6 +1,11 @@
 package edu.utexas.tacc.tapis.meta.api.resources;
 
+import edu.utexas.tacc.tapis.meta.api.MetaApplication;
+import edu.utexas.tacc.tapis.shared.TapisConstants;
 import edu.utexas.tacc.tapis.shared.i18n.MsgUtils;
+import edu.utexas.tacc.tapis.sharedapi.security.AuthenticatedUser;
+import edu.utexas.tacc.tapis.sharedapi.security.ResourceRequestUser;
+import edu.utexas.tacc.tapis.sharedapi.utils.TapisRestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +86,7 @@ public class ResourceBucket {
   @GET
   @Path("/")
   @Produces(MediaType.APPLICATION_JSON)
-  public javax.ws.rs.core.Response listDBNames() {
+  public javax.ws.rs.core.Response listDBNames(@Context SecurityContext securityContext) {
 
     // Trace this request.
     if (_log.isTraceEnabled()) {
@@ -89,7 +94,11 @@ public class ResourceBucket {
           "listDBs", _request.getRequestURL());
       _log.trace(msg);
     }
-  
+
+    // Create a user that collects together tenant, user and request information, then make restricted service check
+    ResourceRequestUser rUser = new ResourceRequestUser((AuthenticatedUser) securityContext.getUserPrincipal());
+    checkRestrictedSvcs(rUser);
+
     // Proxy the GET request and handle any exceptions
     CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
     CoreResponse coreResponse = coreRequest.proxyGetRequest();
@@ -108,7 +117,8 @@ public class ResourceBucket {
   @GET
   @Path("/{db}")
   @Produces(MediaType.APPLICATION_JSON)
-  public javax.ws.rs.core.Response listCollectionNames(@PathParam("db") String db) {
+  public javax.ws.rs.core.Response listCollectionNames(@PathParam("db") String db,
+                                                       @Context SecurityContext securityContext) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -116,7 +126,11 @@ public class ResourceBucket {
       _log.trace(msg);
       _log.trace("List collections in " + db);
     }
-    
+
+    // Create a user that collects together tenant, user and request information, then make restricted service check
+    ResourceRequestUser rUser = new ResourceRequestUser((AuthenticatedUser) securityContext.getUserPrincipal());
+    checkRestrictedSvcs(rUser);
+
     // Proxy the GET request and handle any exceptions
     CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
     CoreResponse coreResponse = coreRequest.proxyGetRequest();
@@ -130,7 +144,8 @@ public class ResourceBucket {
   @GET
   @Path("/{db}/_meta")
   @Produces(MediaType.APPLICATION_JSON)
-  public javax.ws.rs.core.Response getDBMetadata(@PathParam("db") String db) {
+  public javax.ws.rs.core.Response getDBMetadata(@PathParam("db") String db,
+                                                 @Context SecurityContext securityContext) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -138,7 +153,11 @@ public class ResourceBucket {
       _log.trace(msg);
       _log.trace("Get the Metadata for " + db);
     }
-    
+
+    // Create a user that collects together tenant, user and request information, then make restricted service check
+    ResourceRequestUser rUser = new ResourceRequestUser((AuthenticatedUser) securityContext.getUserPrincipal());
+    checkRestrictedSvcs(rUser);
+
     // Proxy the GET request and handle any exceptions
     CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
     CoreResponse coreResponse = coreRequest.proxyGetRequest();
@@ -153,7 +172,8 @@ public class ResourceBucket {
   @PUT
   @Path("/{db}")
   @Produces(MediaType.APPLICATION_JSON)
-  public javax.ws.rs.core.Response createDB(@PathParam("db") String db){
+  public javax.ws.rs.core.Response createDB(@PathParam("db") String db,
+                                            @Context SecurityContext securityContext){
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -161,7 +181,11 @@ public class ResourceBucket {
       _log.trace(msg);
       _log.trace("create database "+ db);
     }
-  
+
+    // Create a user that collects together tenant, user and request information, then make restricted service check
+    ResourceRequestUser rUser = new ResourceRequestUser((AuthenticatedUser) securityContext.getUserPrincipal());
+    checkRestrictedSvcs(rUser);
+
     // Proxy the PUT request and handle any exceptions
     CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
     CoreResponse coreResponse = coreRequest.proxyPutRequest("{}");
@@ -176,7 +200,11 @@ public class ResourceBucket {
   @DELETE
   @Path("/{db}")
   @Produces(MediaType.APPLICATION_JSON)
-  public javax.ws.rs.core.Response deleteDB(){
+  public javax.ws.rs.core.Response deleteDB(@Context SecurityContext securityContext){
+
+    // Create a user that collects together tenant, user and request information, then make restricted service check
+    ResourceRequestUser rUser = new ResourceRequestUser((AuthenticatedUser) securityContext.getUserPrincipal());
+    checkRestrictedSvcs(rUser);
     return javax.ws.rs.core.Response.status(200).entity("{ TODO }").build();
   }
   
@@ -190,7 +218,8 @@ public class ResourceBucket {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public javax.ws.rs.core.Response createCollection(@PathParam("db") String db,
-                                                    @PathParam("collection") String collection) {
+                                                    @PathParam("collection") String collection,
+                                                    @Context SecurityContext securityContext) {
   
     // Trace this request.
     if (_log.isTraceEnabled()) {
@@ -199,7 +228,11 @@ public class ResourceBucket {
       _log.trace(msg);
       _log.trace("create collection "+collection+" in " + db);
     }
-    
+
+    // Create a user that collects together tenant, user and request information, then make restricted service check
+    ResourceRequestUser rUser = new ResourceRequestUser((AuthenticatedUser) securityContext.getUserPrincipal());
+    checkRestrictedSvcs(rUser);
+
     // Proxy the PUT request and handle any exceptions
     CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
     CoreResponse coreResponse = coreRequest.proxyPutRequest("{}");
@@ -235,7 +268,8 @@ public class ResourceBucket {
   @Produces(MediaType.APPLICATION_JSON)
   public javax.ws.rs.core.Response listDocuments(@PathParam("db") String db,
                                                  @PathParam("collection") String collection,
-                                                 @QueryParam("filter") String filter) {
+                                                 @QueryParam("filter") String filter,
+                                                 @Context SecurityContext securityContext) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -243,7 +277,11 @@ public class ResourceBucket {
       _log.trace(msg);
       _log.trace("List documents in " + db +"/"+collection);
     }
-  
+
+    // Create a user that collects together tenant, user and request information, then make restricted service check
+    ResourceRequestUser rUser = new ResourceRequestUser((AuthenticatedUser) securityContext.getUserPrincipal());
+    checkRestrictedSvcs(rUser);
+
     StringBuilder pathUrl = new StringBuilder(_request.getRequestURI());
 
     if(!StringUtils.isEmpty(_request.getQueryString())){
@@ -267,7 +305,8 @@ public class ResourceBucket {
   @Produces(MediaType.APPLICATION_JSON)
   public javax.ws.rs.core.Response getCollectionSize(@PathParam("db") String db,
                                                  @PathParam("collection") String collection,
-                                                 @QueryParam("filter") String filter) {
+                                                 @QueryParam("filter") String filter,
+                                                     @Context SecurityContext securityContext) {
     if (_log.isInfoEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
           "getCollectionSize", _request.getRequestURL());
@@ -278,7 +317,11 @@ public class ResourceBucket {
     // Proxy the GET request and handle any exceptions
     CoreRequest coreRequest = new CoreRequest(_request.getRequestURI() + "?" + _request.getQueryString());
     CoreResponse coreResponse = coreRequest.proxyGetRequest();
-    
+
+    // Create a user that collects together tenant, user and request information, then make restricted service check
+    ResourceRequestUser rUser = new ResourceRequestUser((AuthenticatedUser) securityContext.getUserPrincipal());
+    checkRestrictedSvcs(rUser);
+
     // ---------------------------- Response -------------------------------
     // just return whatever core server sends to us
     return javax.ws.rs.core.Response.status(coreResponse.getStatusCode()).entity(coreResponse.getCoreResponsebody()).build();
@@ -289,7 +332,8 @@ public class ResourceBucket {
   @Path("/{db}/{collection}/_meta")
   @Produces(MediaType.APPLICATION_JSON)
   public javax.ws.rs.core.Response getCollectionMetadata(@PathParam("db") String db,
-                                                         @PathParam("collection") String collection) {
+                                                         @PathParam("collection") String collection,
+                                                         @Context SecurityContext securityContext) {
     if (_log.isInfoEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
           "getMetadata", _request.getRequestURL());
@@ -315,7 +359,8 @@ public class ResourceBucket {
   public javax.ws.rs.core.Response createDocument(@PathParam("db") String db,
                                                   @PathParam("collection") String collection,
                                                   @QueryParam("basic") boolean basic,
-                                                  InputStream payload) {
+                                                  InputStream payload,
+                                                  @Context SecurityContext securityContext) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -360,7 +405,8 @@ public class ResourceBucket {
   @Path("/{db}/{collection}")
   @Produces(MediaType.APPLICATION_JSON)
   public javax.ws.rs.core.Response deleteCollection(@PathParam("db") String db,
-                                                    @PathParam("collection") String collection) {
+                                                    @PathParam("collection") String collection,
+                                                    @Context SecurityContext securityContext) {
     
     // Trace this request.
     if (_log.isTraceEnabled()) {
@@ -396,7 +442,8 @@ public class ResourceBucket {
                                                     @PathParam("collection") String collection,
                                                     @QueryParam("page") String page,
                                                     @QueryParam("pagesize") String pagesize,
-                                                    InputStream payload) {
+                                                    InputStream payload,
+                                                    @Context SecurityContext securityContext) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -456,7 +503,8 @@ public class ResourceBucket {
   @Path("/{db}/{collection}/_indexes")
   @Produces(MediaType.APPLICATION_JSON)
   public javax.ws.rs.core.Response listIndexes(@PathParam("db") String db,
-                                               @PathParam("collection") String collection) {
+                                               @PathParam("collection") String collection,
+                                               @Context SecurityContext securityContext) {
   
     // Trace this request.
     if (_log.isTraceEnabled()) {
@@ -483,7 +531,8 @@ public class ResourceBucket {
   public javax.ws.rs.core.Response createIndex(@PathParam("db") String db,
                                                @PathParam("collection") String collection,
                                                @PathParam("indexName") String indexName,
-                                               InputStream payload) {
+                                               InputStream payload,
+                                               @Context SecurityContext securityContext) {
     
     // Trace this request.
     if (_log.isTraceEnabled()) {
@@ -509,7 +558,8 @@ public class ResourceBucket {
   @Produces(MediaType.APPLICATION_JSON)
   public javax.ws.rs.core.Response deleteIndex(@PathParam("db") String db,
                                                @PathParam("collection") String collection,
-                                               @PathParam("indexName") String indexName) {
+                                               @PathParam("indexName") String indexName,
+                                               @Context SecurityContext securityContext) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -536,7 +586,8 @@ public class ResourceBucket {
   @Produces(MediaType.APPLICATION_JSON)
   public javax.ws.rs.core.Response getDocument(@PathParam("db") String db,
                                                @PathParam("collection") String collection,
-                                               @PathParam("documentId") String documentId) {
+                                               @PathParam("documentId") String documentId,
+                                               @Context SecurityContext securityContext) {
     // Proxy the GET request and handle any exceptions
     CoreRequest coreRequest = new CoreRequest(_request.getRequestURI());
     CoreResponse coreResponse = coreRequest.proxyGetRequest();
@@ -554,7 +605,8 @@ public class ResourceBucket {
   public javax.ws.rs.core.Response replaceDocument(@PathParam("db") String db,
                                                  @PathParam("collection") String collection,
                                                  @PathParam("documentId") String documentId,
-                                                 InputStream payload) {
+                                                 InputStream payload,
+                                                   @Context SecurityContext securityContext) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -580,7 +632,8 @@ public class ResourceBucket {
   public javax.ws.rs.core.Response modifyDocument(@PathParam("db") String db,
                                                  @PathParam("collection") String collection,
                                                  @PathParam("documentId") String documentId,
-                                                 InputStream payload) {
+                                                 InputStream payload,
+                                                  @Context SecurityContext securityContext) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -604,7 +657,8 @@ public class ResourceBucket {
   @Produces(MediaType.APPLICATION_JSON)
   public javax.ws.rs.core.Response deleteDocument(@PathParam("db") String db,
                                                @PathParam("collection") String collection,
-                                               @PathParam("documentId") String documentId) {
+                                               @PathParam("documentId") String documentId,
+                                                  @Context SecurityContext securityContext) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -634,7 +688,8 @@ public class ResourceBucket {
   @Produces(MediaType.APPLICATION_JSON)
   public javax.ws.rs.core.Response addAggregation(@PathParam("db") String db,
                                                    @PathParam("collection") String collection,
-                                                   InputStream payload) {
+                                                   InputStream payload,
+                                                  @Context SecurityContext securityContext) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -659,7 +714,8 @@ public class ResourceBucket {
   public javax.ws.rs.core.Response useAggregation(@PathParam("db") String db,
                                                   @PathParam("collection") String collection,
                                                   @PathParam("aggregation") String aggregation,
-                                                  @QueryParam("avars") String avars) {
+                                                  @QueryParam("avars") String avars,
+                                                  @Context SecurityContext securityContext) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -691,7 +747,8 @@ public class ResourceBucket {
                                                           @PathParam("aggregation") String aggregation,
                                                           @QueryParam("page") String page,
                                                           @QueryParam("pagesize") String pagesize,
-                                                          InputStream payload) {
+                                                          InputStream payload,
+                                                          @Context SecurityContext securityContext) {
 	  
     // Trace this request.
     if (_log.isTraceEnabled()) {
@@ -722,7 +779,8 @@ public class ResourceBucket {
   public javax.ws.rs.core.Response deleteAggregation(@PathParam("db") String db,
                                                      @PathParam("collection") String collection,
                                                      @PathParam("aggregation") String aggregation,
-                                                     @QueryParam("avars") String agvars) {
+                                                     @QueryParam("avars") String agvars,
+                                                     @Context SecurityContext securityContext) {
     // Trace this request.
     if (_log.isTraceEnabled()) {
       String msg = MsgUtils.getMsg("TAPIS_TRACE_REQUEST", getClass().getSimpleName(),
@@ -831,7 +889,11 @@ public class ResourceBucket {
   }
 */
 
-  
-  
+
+  // Simple wrapper for checking restricted svc permissions
+  static void checkRestrictedSvcs(ResourceRequestUser rUser)
+  {
+    TapisRestUtils.checkServiceRestrictions(TapisConstants.SERVICE_NAME_META, MetaApplication.SVCLIST_TRUSTED, rUser);
+  }
 }
 
