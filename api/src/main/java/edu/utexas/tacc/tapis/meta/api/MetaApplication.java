@@ -42,7 +42,7 @@ public class MetaApplication extends ResourceConfig {
   
     // ---------------- Initialize Security Filter --------------
     // Required to process any requests.
-    JWTValidateRequestFilter.setService(RuntimeParameters.SERVICE_NAME_META);
+    JWTValidateRequestFilter.setService(RuntimeParameters.SERVICE_NAME_STREAMS);
     JWTValidateRequestFilter.setSiteId(runTime.getSiteId());
 
     // ------------------- Recoverable Errors -------------------
