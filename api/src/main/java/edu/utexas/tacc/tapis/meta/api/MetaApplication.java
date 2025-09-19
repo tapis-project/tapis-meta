@@ -24,7 +24,7 @@ public class MetaApplication extends ResourceConfig {
   // Tracing.
   private static final Logger _log = LoggerFactory.getLogger(MetaApplication.class);
   // List of Tapis services allowed to call this service with a service JWT.
-  public static final Set<String> SVCLIST_TRUSTED = new HashSet<>(Set.of(TapisConstants.SERVICE_NAME_META));
+  public static final Set<String> SVCLIST_TRUSTED = new HashSet<>(Set.of(TapisConstants.SERVICE_NAME_STREAMS));
 
   public MetaApplication() {
     // Log our existence.
@@ -42,7 +42,7 @@ public class MetaApplication extends ResourceConfig {
   
     // ---------------- Initialize Security Filter --------------
     // Required to process any requests.
-    JWTValidateRequestFilter.setService(RuntimeParameters.SERVICE_NAME_STREAMS);
+    JWTValidateRequestFilter.setService(RuntimeParameters.SERVICE_NAME_META);
     JWTValidateRequestFilter.setSiteId(runTime.getSiteId());
 
     // ------------------- Recoverable Errors -------------------
