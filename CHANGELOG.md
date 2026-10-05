@@ -9,6 +9,13 @@ You may also reference live-docs based on the openapi specification here:
 https://tapis-project.github.io/live-docs
 
 ---------------------------------------------------------------------------
+## 26Q3.0 - 2026-10-05
+Increased the release version
+### New features:
+- None
+### Bug fixes:
+- None
+  
 ## 26Q2.0 - 2026-05-26
 Increased the release version
 ### New features:
